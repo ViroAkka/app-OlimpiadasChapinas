@@ -1,0 +1,64 @@
+﻿@model System.Data.DataSet
+
+@{
+    ViewBag.Title = "ActualizarDeporte";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    <script src="~/JS/jsDeporte.js"></script>
+}
+
+<h2>Actualización de Deportes</h2>
+
+<form action="/Deporte/actualizar" method="post">
+    <div>
+        <div class="card border-primary">
+            <div class="card-header">
+                <label class="p-2">Actualizar Deporte</label>
+                <button onclick="location.href = '@Url.Action("Deporte", "Deporte")'; return false;" class="btn btn-success">Regresar</button>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">ID del Deporte</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["idDeporte"].ToString()" required class="form-control mb-2" id="idDeporte" name="idDeporte" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Nombre del Deporte</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["nombre"].ToString()" required class="form-control mb-2" id="nombre" name="nombre" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Categoría</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["categoria"].ToString()" required class="form-control mb-2" id="categoria" name="categoria" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Descripción del Deporte</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["descripcion"].ToString()" required class="form-control mb-2" id="descripcion" name="descripcion" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Cantidad de jugadores por equipo</label>
+                    <input type="number" value="@Model.Tables[0].Rows[0]["cantidadJugadores"].ToString()" required class="form-control mb-2" id="cantidadJugadores" name="cantidadJugadores" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+
+        </div>
+    </div>
+
+</form>
+
+
