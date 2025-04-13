@@ -1,0 +1,81 @@
+﻿@model System.Data.DataSet
+
+@{
+    ViewBag.Title = "ActualizarInscripcion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    <script src="~/JS/jsInscripcion.js"></script>
+}
+
+<h2>Actualización de Inscripciones</h2>
+
+<form action="/Inscripcion/Actualizar" method="post">
+    <div class="card border-primary">
+        <div class="card-header">
+            <label class="p-2">Actualizar Inscripcion</label>
+            <button onclick="location.href = '@Url.Action("Inscripcion", "Inscripcion")'; return false;" class="btn btn-success">Regresar</button>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="col" align="center">    
+                <h2 align="center">Datos del Evento a actualizar</h2>
+                    <div class="form-group">
+                        <label class="p-2">ID del Evento</label>
+                        <input type="text" value="@Model.Tables[0].Rows[0]["idEvento"]" required class="form-control mb-2" id="idEvento" name="idEvento" />
+                    </div>
+                </div>
+
+                <div class="col" align="center">
+                    <div class="form-group">
+                        <label class="p-2">ID del Participante</label>
+                        <input type="text" value="@Model.Tables[0].Rows[0]["idParticipante"]" required class="form-control mb-2" id="idParticipante" name="idParticipante" />
+                    </div>
+                </div>
+
+                <div class="col" align="center">
+                    <div class="form-group">
+                        <label class="p-2">ID del Pago</label>
+                        <input type="text" value="@Model.Tables[0].Rows[0]["idPago"]" required class="form-control mb-2" id="idPago" name="idPago" />
+                    </div>
+                </div>
+
+                <div class="col" align="center">
+                    <div class="form-group">
+                        <label class="p-2">Fuente de publicidad donde se enteró del evento</label>
+                        <input type="text" value="@Model.Tables[0].Rows[0]["fuentePublicidad"].ToString()" required class="form-control mb-2" id="fuentePublicidad" name="fuentePublicidad" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col mt-10">
+                <h2 align="center">Datos actualizados</h2>
+                <div class="col" align="center">
+                    <div class="form-group">
+                        <label class="p-2">ID del Evento</label>
+                        <input type="text" required class="form-control mb-2" id="idEventoActualizado" name="idEventoActualizado" />
+                    </div>
+                </div>
+
+                <div class="col" align="center">
+                    <div class="form-group">
+                        <label class="p-2">ID del Participante</label>
+                        <input type="text" required class="form-control mb-2" id="idParticipanteActualizado" name="idParticipanteActualizado" />
+                    </div>
+                </div>
+
+                <div class="col" align="center">
+                    <div class="form-group">
+                        <label class="p-2">ID del Pago</label>
+                        <input type="text" required class="form-control mb-2" id="idPagoActualizado" name="idPagoActualizado" />
+                    </div>
+                </div>
+            </div>
+            <div align="center">
+                <button type="submit" class="btn btn-primary d-xl-inline" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            </div>
+        </div>
+    </div>
+</form>
+

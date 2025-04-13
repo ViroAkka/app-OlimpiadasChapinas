@@ -4,25 +4,29 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using static app_OlimpiadasChapinas.Models.csEstructuraDeporte;
+using static app_OlimpiadasChapinas.Models.csEstructuraPago;
 
 namespace app_OlimpiadasChapinas.Controllers
 {
-    public class DeporteController : Controller
+    public class PagoController : Controller
     {
-        public ActionResult Deporte(string idDeporte)
+        // GET: Pago
+        public ActionResult Pago(string idPago)
         {
             DataSet data = new DataSet();
-            var url = string.IsNullOrEmpty(idDeporte) ? $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarDeporte" : $"http://localhost/api-OlimpiadasChapinas/rest/api/listarDeportePorID?idDeporte={idDeporte}";
+            var url = string.IsNullOrEmpty(idPago)
+                ? $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPago"
+                : $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPagoPorID?idPago={idPago}";
 
             var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
+            request.Method = "GET"; 
             request.ContentType = "application/json";
             request.Accept = "application/json";
             string responseBody = "";
@@ -49,26 +53,25 @@ namespace app_OlimpiadasChapinas.Controllers
             return View(data);
         }
 
-        public ActionResult newDeporte()
+        public ActionResult newPago()
         {
             return View();
         }
 
-        public ActionResult guardar(FormCollection form)
+        public ActionResult Guardar(FormCollection form)
         {
             string json = "";
             string resultJson = "";
             Byte[] reqByte, resByte;
-            requestDeporte InsertarDeporte = new requestDeporte();
-            InsertarDeporte.nombre = form["nombre"];
-            InsertarDeporte.categoria = form["categoria"];
-            InsertarDeporte.descripcion = form["descripcion"];
-            InsertarDeporte.cantidadJugadores = int.Parse(form["cantidadJugadores"].ToString());
+            requestPago InsertarPago = new requestPago();
+            InsertarPago.idFormaPago = int.Parse(form["idFormaPago"]);
+            InsertarPago.montoPago = double.Parse(form["montoPago"]);
+            InsertarPago.observaciones = form["observaciones"].Trim();
 
-            json = JsonConvert.SerializeObject(InsertarDeporte);
+            json = JsonConvert.SerializeObject(InsertarPago);
 
             WebClient client = new WebClient();
-            string url = $"http://localhost/api-OlimpiadasChapinas/rest/api/InsertarDeporte";
+            string url = $"http://localhost/api-OlimpiadasChapinas/rest/api/InsertarPago";
             var request = (HttpWebRequest)WebRequest.Create(url);
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -78,20 +81,18 @@ namespace app_OlimpiadasChapinas.Controllers
             resByte = client.UploadData(request.Address.ToString(), "post", reqByte);
             resultJson = Encoding.UTF8.GetString(resByte);
 
-            responseDeporte result = new responseDeporte();
-            result = JsonConvert.DeserializeObject<responseDeporte>(resultJson);
+            responsePago result = new responsePago();
+            result = JsonConvert.DeserializeObject<responsePago>(resultJson);
             client.Dispose();
 
-            if (result.respuesta == 1) return RedirectToAction("Deporte", "Deporte");
-            else return RedirectToAction("newDeporte", "Deporte");
+            if (result.respuesta == 1) return RedirectToAction("Pago", "Pago");
+            else return RedirectToAction("newPago", "Pago");
         }
 
-        public ActionResult ActualizarDeporte(string idDeporte)
+        public ActionResult ActualizarPago(int idPago)
         {
             DataSet data = new DataSet();
-            var url = "";
-
-            url = $"http://localhost/api-OlimpiadasChapinas/rest/api/listarDeportePorID?idDeporte={idDeporte}";
+            var url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPagoPorID?idPago={idPago}";
 
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
@@ -121,51 +122,52 @@ namespace app_OlimpiadasChapinas.Controllers
             return View(data);
         }
 
-        public ActionResult actualizar(FormCollection form)
+        public async Task<ActionResult> Actualizar(FormCollection form)
         {
             string json = "";
             string resultJson = "";
-            Byte[] reqByte, resByte;
-            requestDeporte ActualizarDeporte = new requestDeporte();
-            ActualizarDeporte.idDeporte = int.Parse(form["idDeporte"]);
-            ActualizarDeporte.nombre = form["nombre"];
-            ActualizarDeporte.categoria = form["categoria"];
-            ActualizarDeporte.descripcion = form["descripcion"];
-            ActualizarDeporte.cantidadJugadores = int.Parse(form["cantidadJugadores"].ToString());
+            requestPago ActualizarPago = new requestPago();
+            ActualizarPago.idPago = int.Parse(form["idPago"]);
+            ActualizarPago.idFormaPago = int.Parse(form["idFormaPago"]);
+            ActualizarPago.montoPago = double.Parse(form["montoPago"]);
+            ActualizarPago.observaciones = form["observaciones"].Trim();
 
-            json = JsonConvert.SerializeObject(ActualizarDeporte);
+            json = JsonConvert.SerializeObject(ActualizarPago);
 
-            WebClient client = new WebClient();
-            string url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ActualizarDeporte";
-            var request = (HttpWebRequest)WebRequest.Create(url);
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost/api-OlimpiadasChapinas/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            client.Headers["content-type"] = "application/json";
+                var jsonContent = new StringContent(JsonConvert.SerializeObject(ActualizarPago), Encoding.UTF8, "application/json");
 
-            reqByte = Encoding.UTF8.GetBytes(json);
-            resByte = client.UploadData(request.Address.ToString(), "post", reqByte);
-            resultJson = Encoding.UTF8.GetString(resByte);
+                HttpResponseMessage response = await client.PostAsync("rest/api/ActualizarPago", jsonContent);
 
-            responseDeporte result = new responseDeporte();
-            result = JsonConvert.DeserializeObject<responseDeporte>(resultJson);
-            client.Dispose();
+                if (response.IsSuccessStatusCode)
+                {
+                    resultJson = await response.Content.ReadAsStringAsync();
+                    responsePago result = JsonConvert.DeserializeObject<responsePago>(resultJson);
+                    if (result.respuesta == 1)
+                        return RedirectToAction("Pago", "Pago");
+                }
 
-            if (result.respuesta == 1) return RedirectToAction("Deporte", "Deporte");
-            else return RedirectToAction("ActualizarDeporte", "Deporte");
+                return RedirectToAction("ActualizarPago", "Pago");
+            }
         }
 
-        public ActionResult eliminar(string idDeporte)
+        public ActionResult Eliminar(string idPago)
         {
             string json = "";
             string resultJson = "";
             Byte[] reqByte, resByte;
 
             WebClient client = new WebClient();
-            string url = $"http://localhost/api-OlimpiadasChapinas/rest/api/EliminarDeporte";
+            string url = $"http://localhost/api-OlimpiadasChapinas/rest/api/EliminarPago";
             var request = (HttpWebRequest)WebRequest.Create(url);
 
-            requestDeporte eliminar = new requestDeporte();
-            eliminar.idDeporte = int.Parse(idDeporte);
+            requestPago eliminar = new requestPago();
+            eliminar.idPago = int.Parse(idPago);
 
             json = JsonConvert.SerializeObject(eliminar);
 
@@ -176,11 +178,11 @@ namespace app_OlimpiadasChapinas.Controllers
             resByte = client.UploadData(request.Address.ToString(), "post", reqByte);
             resultJson = Encoding.UTF8.GetString(resByte);
 
-            responseDeporte result = new responseDeporte();
-            result = JsonConvert.DeserializeObject<responseDeporte>(resultJson);
+            responsePago result = new responsePago();
+            result = JsonConvert.DeserializeObject<responsePago>(resultJson);
             client.Dispose();
 
-            return RedirectToAction("Deporte", "Deporte");
+            return RedirectToAction("Pago", "Pago");
         }
     }
 }

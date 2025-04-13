@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "FormaPago";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Mantenimiento de Formas de Pago</h2>
+<form method="post" action="@Url.Action("FormaPago", "FormaPago")">
+    <div class="card border-primary">
+        <div class="card-header">
+            <label class="p-2">Formas de pago</label>
+            <input type="text" id="idFormaPago" name="idFormaPago" placeholder="Escribe el ID de la forma de pago" />
+            <button type="submit" class="btn btn-default">Buscar</button>
+            <button onclick="location.href = '@Url.Action("newFormaPago", "FormaPago")'; return false" class="btn btn-success">Nuevo</button>
+        </div>
+
+        <table class="table-responsive" border="1" style="color: black">
+            <thead>
+                <tr>
+                    <th><b>ID Forma de Pago</b></th>
+                    <th><b>Descripción</b></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.Tables.Count > 0)
+                {
+                    if (Model.Tables[0].Rows.Count > 0)
+                    {
+                        for (int x = 0; x < Model.Tables[0].Rows.Count; x++)
+                        {
+                            <tr align="center">
+                                <td class="table-active">@Model.Tables[0].Rows[x]["idFormaPago"]</td>
+                                <td class="table-active">@Model.Tables[0].Rows[x]["descripcion"]</td>
+                                <td><button type="button" class="btn btn-warning" onclick="location.href = '@Url.Action("ActualizarFormaPago", "FormaPago", new { idFormaPago = Model.Tables[0].Rows[x]["idFormaPago"].ToString() })'; return false;">Actualizar</button></td>
+                                <td><button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("Eliminar", "FormaPago", new { idFormaPago = Model.Tables[0].Rows[x]["idFormaPago"].ToString() })'; return false;">Eliminar</button></td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</form>
+

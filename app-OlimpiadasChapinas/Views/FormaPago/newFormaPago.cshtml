@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "newFormaPago";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    <script src="~/JS/jsFormaPago.js"></script>
+}
+
+<h2>Registro de Nuevas Formas de Pago</h2>
+
+<form action="/FormaPago/Guardar" method="post">
+    <div>
+        <div class="card border-primary">
+            <div class="card-header">
+                <label class="p-2">Nueva Forma de Pago</label>
+                <button onclick="location.href = '@Url.Action("FormaPago", "FormaPago")'; return false;" class="btn btn-success">Regresar</button>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Forma de Pago</label>
+                    <input type="text" required class="form-control mb-2" id="descripcion" name="descripcion" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+
+        </div>
+    </div>
+</form>
+

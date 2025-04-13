@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "newInscripcion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    <script src="~/JS/jsInscripcion.js"></script>
+}
+
+<h2>Registro de Nuevas Inscripciones</h2>
+
+<form action="/Inscripcion/Guardar" method="post">
+    <div>
+        <div class="card border-primary">
+            <div class="card-header">
+                <label class="p-2">Nueva Inscripcion</label>
+                <button onclick="location.href = '@Url.Action("Inscripcion", "Inscripcion")'; return false;" class="btn btn-success">Regresar</button>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">ID del Evento</label>
+                    <input type="text" required class="form-control mb-2" id="idEvento" name="idEvento" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">ID del Participante</label>
+                    <input type="text" required class="form-control mb-2" id="idParticipante" name="idParticipante" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">ID del Pago</label>
+                    <input type="text" required class="form-control mb-2" id="idPago" name="idPago" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Fuente de publicidad donde se enteró del evento</label>
+                    <input type="text" required class="form-control mb-2" id="fuentePublicidad" name="fuentePublicidad" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+
+        </div>
+    </div>
+
+</form>
+
+
+

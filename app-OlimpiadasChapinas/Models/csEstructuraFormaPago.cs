@@ -5,18 +5,15 @@ using System.Web;
 
 namespace app_OlimpiadasChapinas.Models
 {
-    public class csEstructuraDeporte
+    public class csEstructuraFormaPago
     {
-        public class requestDeporte
+        public class requestFormaPago
         {
-            public int idDeporte { get; set; }
-            public string nombre { get; set; }
-            public string categoria { get; set; }
+            public int idFormaPago { get; set; }
             public string descripcion { get; set; }
-            public int cantidadJugadores { get; set; }
         }
 
-        public class responseDeporte
+        public class responseFormaPago
         {
             public int respuesta { get; set; }
             public string descripcionRespuesta { get; set; }

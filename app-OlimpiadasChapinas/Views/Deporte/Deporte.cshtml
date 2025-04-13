@@ -1,5 +1,4 @@
-﻿@model List<app_OlimpiadasChapinas.Models.csEstructuraDeporte.requestDeporte>    
-
+﻿@model System.Data.DataSet
 @{   ViewBag.Title = "Deporte";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -16,13 +15,15 @@
 
         <table class="table-responsive" border="1" style="color: black">
             <thead>
-            <td><b>ID Deporte</b></td>
-            <td><b>Nombre</b></td>
-            <td><b>Categoría</b></td>
-            <td><b>Descripción</b></td>
-            <td><b>Cantidad de Jugadores</b></td>
-            <td></td>
-            <td></td>
+                <tr>
+                    <th><b>ID Deporte</b></th>
+                    <th><b>Nombre</b></th>
+                    <th><b>Categoría</b></th>
+                    <th><b>Descripción</b></th>
+                    <th><b>Cantidad de Jugadores</b></th>
+                    <th></th>
+                    <th></th>
+                </tr>
             </thead>
 
             <tbody>

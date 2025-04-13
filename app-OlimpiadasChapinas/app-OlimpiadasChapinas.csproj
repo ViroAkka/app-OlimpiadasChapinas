@@ -121,11 +121,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DeporteController.cs" />
+    <Compile Include="Controllers\EventoController.cs" />
+    <Compile Include="Controllers\FormaPagoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InscripcionController.cs" />
+    <Compile Include="Controllers\PagoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\csEstructuraDeporte.cs" />
+    <Compile Include="Models\csEstructuraEvento.cs" />
+    <Compile Include="Models\csEstructuraFormaPago.cs" />
+    <Compile Include="Models\csEstructuraInscripcion.cs" />
+    <Compile Include="Models\csEstructuraPago.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -148,7 +156,11 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="JS\jsFormaPago.js" />
     <Content Include="JS\jsDeporte.js" />
+    <Content Include="JS\jsEvento.js" />
+    <Content Include="JS\jsInscripcion.js" />
+    <Content Include="JS\jsPago.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -183,6 +195,18 @@
     <Content Include="Views\Deporte\Deporte.cshtml" />
     <Content Include="Views\Deporte\newDeporte.cshtml" />
     <Content Include="Views\Deporte\ActualizarDeporte.cshtml" />
+    <Content Include="Views\Evento\Evento.cshtml" />
+    <Content Include="Views\Evento\newEvento.cshtml" />
+    <Content Include="Views\Evento\ActualizarEvento.cshtml" />
+    <Content Include="Views\FormaPago\FormaPago.cshtml" />
+    <Content Include="Views\FormaPago\newFormaPago.cshtml" />
+    <Content Include="Views\FormaPago\ActualizarFormaPago.cshtml" />
+    <Content Include="Views\Inscripcion\Inscripcion.cshtml" />
+    <Content Include="Views\Inscripcion\newInscripcion.cshtml" />
+    <Content Include="Views\Inscripcion\ActualizarInscripcion.cshtml" />
+    <Content Include="Views\Pago\Pago.cshtml" />
+    <Content Include="Views\Pago\newPago.cshtml" />
+    <Content Include="Views\Pago\ActualizarPago.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

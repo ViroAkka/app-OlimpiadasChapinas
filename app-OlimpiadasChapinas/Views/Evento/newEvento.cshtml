@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "newEvento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    <script src="~/JS/jsEvento.js"></script>
+}
+
+<h2>Registro de Nuevos Eventos</h2>
+
+<form action="/Evento/Guardar" method="post">
+    <div>
+        <div class="card border-primary">
+            <div class="card-header">
+                <label class="p-2">Nuevo Evento</label>
+                <button onclick="location.href = '@Url.Action("Evento", "Evento")'; return false;" class="btn btn-success">Regresar</button>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Nombre del Evento</label>
+                    <input type="text" required class="form-control mb-2" id="nombre" name="nombre" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">ID Deporte</label>
+                    <input type="number" required class="form-control mb-2" id="idDeporte" name="idDeporte" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">ID del Evento Principal</label>
+                    <input type="number" class="form-control mb-2" id="idEventoPadre" name="idEventoPadre" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Fecha de inicio del Evento</label>
+                    <input type="text" required class="form-control mb-2" id="fechaInicio" name="fechaInicio" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Fecha de fin del Evento</label>
+                    <input type="text" required class="form-control mb-2" id="fechaFin" name="fechaFin" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Cantidad de participantes</label>
+                    <input type="number" required class="form-control mb-2" id="cantidadParticipantes" name="cantidadParticipantes" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Monto de Inscripción</label>
+                    <input type="number" required class="form-control mb-2" id="montoInscripcion" name="montoInscripcion" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+
+        </div>
+    </div>
+
+</form>

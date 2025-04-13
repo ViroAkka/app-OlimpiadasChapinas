@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "newPago";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    <script src="~/JS/jsPago.js"></script>
+}
+
+<h2>Registro de Nuevos Pagos</h2>
+
+<form action="/Pago/Guardar" method="post">
+    <div>
+        <div class="card border-primary">
+            <div class="card-header">
+                <label class="p-2">Nuevo Pago</label>
+                <button onclick="location.href = '@Url.Action("Pago", "Pago")'; return false;" class="btn btn-success">Regresar</button>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">ID Forma de Pago</label>
+                    <input type="text" required class="form-control mb-2" id="idFormaPago" name="idFormaPago" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Monto del pago</label>
+                    <input type="text" required class="form-control mb-2" id="montoPago" name="montoPago" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Observaciones</label>
+                    <input type="text" required class="form-control mb-2" id="observaciones" name="observaciones" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+
+        </div>
+    </div>
+</form>
+
