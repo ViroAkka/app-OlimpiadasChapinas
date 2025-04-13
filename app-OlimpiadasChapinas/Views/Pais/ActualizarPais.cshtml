@@ -1,0 +1,45 @@
+﻿@model  System.Data.DataSet
+
+@{
+    ViewBag.Title = "ActualizarPais";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    <script src="~/JS/jsPais.js"></script>
+}
+
+<h2>Actualización de paises</h2>
+
+<form action="/Pais/Actualizar" method="post">
+    <div>
+        <div class="card border-primary">
+            <div class="card-header">
+                <label class="p-2">Actualizar Pais</label>
+                <button onclick="location.href = '@Url.Action("Pais", "Pais")'; return false;" class="btn btn-success">Regresar</button>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">ID del País (3 letras)</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["idPais"]" required class="form-control mb-2" id="idPais" name="idPais" />
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Nombre del País</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["nombre"]" required class="form-control mb-2" id="nombre" name="nombre" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+
+        </div>
+    </div>
+</form>
+
+
+
+
+

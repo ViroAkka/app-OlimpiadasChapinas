@@ -126,6 +126,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InscripcionController.cs" />
     <Compile Include="Controllers\PagoController.cs" />
+    <Compile Include="Controllers\PaisController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -134,6 +135,7 @@
     <Compile Include="Models\csEstructuraFormaPago.cs" />
     <Compile Include="Models\csEstructuraInscripcion.cs" />
     <Compile Include="Models\csEstructuraPago.cs" />
+    <Compile Include="Models\csEstructuraPais.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +163,7 @@
     <Content Include="JS\jsEvento.js" />
     <Content Include="JS\jsInscripcion.js" />
     <Content Include="JS\jsPago.js" />
+    <Content Include="JS\jsPais.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -207,6 +210,9 @@
     <Content Include="Views\Pago\Pago.cshtml" />
     <Content Include="Views\Pago\newPago.cshtml" />
     <Content Include="Views\Pago\ActualizarPago.cshtml" />
+    <Content Include="Views\Pais\Pais.cshtml" />
+    <Content Include="Views\Pais\newPais.cshtml" />
+    <Content Include="Views\Pais\ActualizarPais.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

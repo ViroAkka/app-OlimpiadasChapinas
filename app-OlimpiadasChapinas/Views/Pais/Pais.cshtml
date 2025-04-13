@@ -1,0 +1,46 @@
+﻿@model System.Data.DataSet
+@{
+    ViewBag.Title = "Pais";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Mantenimiento de Paises</h2>
+<form method="post" action="@Url.Action("Pais", "Pais")">
+    <div class="card border-primary">
+        <div class="card-header">
+            <label class="p-2">País</label>
+            <input type="text" id="idPais" name="idPais" placeholder="Escribe el ID del país" />
+            <button type="submit" class="btn btn-default">Buscar</button>
+            <button onclick="location.href = '@Url.Action("newPais", "Pais")'; return false" class="btn btn-success">Nuevo</button>
+        </div>
+
+        <table class="table-responsive" border="1" style="color: black">
+            <thead>
+                <tr align="center">
+                    <th><b>ID de País</b></th>
+                    <th><b>Nombre</b></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.Tables.Count > 0)
+                {
+                    if (Model.Tables[0].Rows.Count > 0)
+                    {
+                        for (int x = 0; x < Model.Tables[0].Rows.Count; x++)
+                        {
+                            <tr align="center">
+                                <td class="table-active">@Model.Tables[0].Rows[x]["idPais"]</td>
+                                <td class="table-active">@Model.Tables[0].Rows[x]["nombre"]</td>
+                                <td><button type="button" class="btn btn-warning" onclick="location.href = '@Url.Action("ActualizarPais", "Pais", new { idPais = Model.Tables[0].Rows[x]["idPais"].ToString() })'; return false;">Actualizar</button></td>
+                                <td><button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("Eliminar", "Pais", new { idPais = Model.Tables[0].Rows[x]["idPais"].ToString() })'; return false;">Eliminar</button></td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</form>
