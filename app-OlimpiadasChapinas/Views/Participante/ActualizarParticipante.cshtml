@@ -1,0 +1,69 @@
+﻿@model System.Data.DataSet
+
+@{
+    ViewBag.Title = "ActualizarParticipante";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    <script src="~/JS/jsParticipante.js"></script>
+}
+
+<h2>Actualización de Participantes</h2>
+
+<form action="/Participante/Actualizar" method="post">
+    <div>
+        <div class="card border-primary">
+            <div class="card-header">
+                <label class="p-2">Actualizar Participante</label>
+                <button onclick="location.href = '@Url.Action("Participante", "Participante")'; return false;" class="btn btn-success">Regresar</button>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">ID del participante</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["idParticipante"].ToString()" required class="form-control mb-2" id="idParticipante" name="idParticipante" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">ID del país</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["idPais"].ToString()" required class="form-control mb-2" id="idPais" name="idPais" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">ID del Usuario</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["idUsuario"].ToString()" required class="form-control mb-2" id="idUsuario" name="idUsuario" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">Fecha de nacimiento</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["fechaNacimiento"].ToString()" required class="form-control mb-2" id="fechaNacimiento" name="fechaNacimiento" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">Altura</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["altura"].ToString()" required class="form-control mb-2" id="altura" name="altura" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">Peso</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["peso"].ToString()" required class="form-control mb-2" id="peso" name="peso" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">Género</label>
+                    <select  value="@Model.Tables[0].Rows[0]["genero"].ToString()" class="form-control mb-2" required id="genero" name="genero">
+                        <option disabled selected>-- Seleccionar opción --</option>
+                        <option>F</option>
+                        <option>M</option>
+                        <option>Otro</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+
+        </div>
+    </div>
+</form>
+
