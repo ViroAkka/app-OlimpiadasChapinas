@@ -1,0 +1,48 @@
+﻿@model System.Data.DataSet
+
+@{
+    ViewBag.Title = "ActualizarPremiacion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    <script src="~/JS/jsPremiacion.js"></script>
+}
+
+<h2>Registro de Nuevas Premiaciones</h2>
+
+<form action="/Premiacion/Actualizar" method="post">
+    <div>
+        <div class="card border-primary">
+            <div class="card-header">
+                <label class="p-2">Actualización de Premiación</label>
+                <button onclick="location.href = '@Url.Action("Premiacion", "Premiacion")'; return false;" class="btn btn-success">Regresar</button>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">ID de la premiación</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["idPremiacion"].ToString()" required class="form-control mb-2" id="idPremiacion" name="idPremiacion" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">ID del evento</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["idEvento"].ToString()" required class="form-control mb-2" id="idEvento" name="idEvento" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">ID del puesto de premiación</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["idPuesto"].ToString()" required class="form-control mb-2" id="idPuesto" name="idPuesto" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">ID del participante</label>
+                    <input type="text" value="@Model.Tables[0].Rows[0]["idParticipante"].ToString()" required class="form-control mb-2" id="idParticipante" name="idParticipante" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+
+        </div>
+    </div>
+</form>

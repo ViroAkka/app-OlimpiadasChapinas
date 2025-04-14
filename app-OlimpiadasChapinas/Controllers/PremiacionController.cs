@@ -11,19 +11,20 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using static app_OlimpiadasChapinas.Models.csEstructuraParticipante;
+using static app_OlimpiadasChapinas.Models.csEstructuraFormaPago;
+using static app_OlimpiadasChapinas.Models.csEstructuraPremiacion;
 
 namespace app_OlimpiadasChapinas.Controllers
 {
-    public class ParticipanteController : Controller
+    public class PremiacionController : Controller
     {
-        // GET: Participante
-        public ActionResult Participante(string idParticipante)
+        // GET: Premiacion
+        public ActionResult Premiacion(string idPremiacion)
         {
             DataSet data = new DataSet();
-            var url = string.IsNullOrEmpty(idParticipante)
-                ? $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarParticipante"
-                : $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarParticipantePorID?idParticipante={idParticipante}";
+            var url = string.IsNullOrEmpty(idPremiacion)
+                ? $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPremiacion"
+                : $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPremiacionPorID?idPremiacion={idPremiacion}";
 
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
@@ -53,7 +54,7 @@ namespace app_OlimpiadasChapinas.Controllers
             return View(data);
         }
 
-        public ActionResult newParticipante()
+        public ActionResult newPremiacion()
         {
             return View();
         }
@@ -63,18 +64,15 @@ namespace app_OlimpiadasChapinas.Controllers
             string json = "";
             string resultJson = "";
             Byte[] reqByte, resByte;
-            requestParticipante InsertarParticipante = new requestParticipante();
-            InsertarParticipante.idPais = form["idPais"];
-            InsertarParticipante.idUsuario = int.Parse(form["idUsuario"]);
-            InsertarParticipante.fechaNacimiento = form["fechaNacimiento"];
-            InsertarParticipante.altura = double.Parse(form["altura"]);
-            InsertarParticipante.peso = double.Parse(form["peso"]);
-            InsertarParticipante.genero = form["genero"];
+            requestPremiacion InsertarPremiacion = new requestPremiacion();
+            InsertarPremiacion.idEvento = int.Parse(form["idEvento"]);
+            InsertarPremiacion.idPuesto = int.Parse(form["idPuesto"]);
+            InsertarPremiacion.idParticipante = int.Parse(form["idParticipante"]);
 
-            json = JsonConvert.SerializeObject(InsertarParticipante);
+            json = JsonConvert.SerializeObject(InsertarPremiacion);
 
             WebClient client = new WebClient();
-            string url = $"http://localhost/api-OlimpiadasChapinas/rest/api/InsertarParticipante";
+            string url = $"http://localhost/api-OlimpiadasChapinas/rest/api/InsertarPremiacion";
             var request = (HttpWebRequest)WebRequest.Create(url);
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -84,18 +82,18 @@ namespace app_OlimpiadasChapinas.Controllers
             resByte = client.UploadData(request.Address.ToString(), "post", reqByte);
             resultJson = Encoding.UTF8.GetString(resByte);
 
-            responseParticipante result = new responseParticipante();
-            result = JsonConvert.DeserializeObject<responseParticipante>(resultJson);
+            responsePremiacion result = new responsePremiacion();
+            result = JsonConvert.DeserializeObject<responsePremiacion>(resultJson);
             client.Dispose();
 
-            if (result.respuesta == 1) return RedirectToAction("Participante", "Participante");
-            else return RedirectToAction("newParticipante", "Participante");
+            if (result.respuesta == 1) return RedirectToAction("Premiacion", "Premiacion");
+            else return RedirectToAction("newPremiacion", "Premiacion");
         }
 
-        public ActionResult ActualizarParticipante(int idParticipante)
+        public ActionResult ActualizarPremiacion(string idPremiacion)
         {
             DataSet data = new DataSet();
-            var url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarParticipante?idParticipante={idParticipante}";
+            var url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPremiacionPorID?idPremiacion={idPremiacion}";
 
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
@@ -129,16 +127,13 @@ namespace app_OlimpiadasChapinas.Controllers
         {
             string json = "";
             string resultJson = "";
-            requestParticipante ActualizarParticipante = new requestParticipante();
-            ActualizarParticipante.idParticipante = int.Parse(form["idParticipante"]);
-            ActualizarParticipante.idPais = form["idPais"];
-            ActualizarParticipante.idUsuario = int.Parse(form["idUsuario"]);
-            ActualizarParticipante.fechaNacimiento = form["fechaNacimiento"];
-            ActualizarParticipante.altura = double.Parse(form["altura"]);
-            ActualizarParticipante.peso = double.Parse(form["peso"]);
-            ActualizarParticipante.genero = form["genero"];
+            requestPremiacion ActualizarPremiacion = new requestPremiacion();
+            ActualizarPremiacion.idPremiacion = int.Parse(form["idPremiacion"]);
+            ActualizarPremiacion.idEvento = int.Parse(form["idEvento"]);
+            ActualizarPremiacion.idPuesto = int.Parse(form["idPuesto"]);
+            ActualizarPremiacion.idParticipante = int.Parse(form["idParticipante"]);
 
-            json = JsonConvert.SerializeObject(ActualizarParticipante);
+            json = JsonConvert.SerializeObject(ActualizarPremiacion);
 
             using (var client = new HttpClient())
             {
@@ -146,34 +141,34 @@ namespace app_OlimpiadasChapinas.Controllers
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var jsonContent = new StringContent(JsonConvert.SerializeObject(ActualizarParticipante), Encoding.UTF8, "application/json");
+                var jsonContent = new StringContent(JsonConvert.SerializeObject(ActualizarPremiacion), Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await client.PostAsync("rest/api/ActualizarParticipante", jsonContent);
+                HttpResponseMessage response = await client.PostAsync("rest/api/ActualizarPremiacion", jsonContent);
 
                 if (response.IsSuccessStatusCode)
                 {
                     resultJson = await response.Content.ReadAsStringAsync();
-                    responseParticipante result = JsonConvert.DeserializeObject<responseParticipante>(resultJson);
+                    responsePremiacion result = JsonConvert.DeserializeObject<responsePremiacion>(resultJson);
                     if (result.respuesta == 1)
-                        return RedirectToAction("Participante", "Participante");
+                        return RedirectToAction("Premiacion", "Premiacion");
                 }
 
-                return RedirectToAction("ActualizarParticipante", "Participante");
+                return RedirectToAction("ActualizarPremiacion", "Premiacion");
             }
         }
 
-        public ActionResult Eliminar(string idParticipante)
+        public ActionResult Eliminar(string idPremiacion)
         {
             string json = "";
             string resultJson = "";
             Byte[] reqByte, resByte;
 
             WebClient client = new WebClient();
-            string url = $"http://localhost/api-OlimpiadasChapinas/rest/api/EliminarParticipante";
+            string url = $"http://localhost/api-OlimpiadasChapinas/rest/api/EliminarPremiacion";
             var request = (HttpWebRequest)WebRequest.Create(url);
 
-            requestParticipante eliminar = new requestParticipante();
-            eliminar.idParticipante = int.Parse(idParticipante);
+            requestPremiacion eliminar = new requestPremiacion();
+            eliminar.idPremiacion = int.Parse(idPremiacion);
 
             json = JsonConvert.SerializeObject(eliminar);
 
@@ -184,11 +179,11 @@ namespace app_OlimpiadasChapinas.Controllers
             resByte = client.UploadData(request.Address.ToString(), "post", reqByte);
             resultJson = Encoding.UTF8.GetString(resByte);
 
-            responseParticipante result = new responseParticipante();
-            result = JsonConvert.DeserializeObject<responseParticipante>(resultJson);
+            responsePremiacion result = new responsePremiacion();
+            result = JsonConvert.DeserializeObject<responsePremiacion>(resultJson);
             client.Dispose();
 
-            return RedirectToAction("Participante", "Participante");
+            return RedirectToAction("Premiacion", "Premiacion");
         }
     }
 }
