@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "newPuestoPremiacion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    <script src="~/JS/jsPuestoPremiacion.js"></script>
+}
+
+<h2>Registro de nuevos puestos</h2>
+
+<form action="/PuestoPremiacion/Guardar" method="post">
+    <div>
+        <div class="card border-primary">
+            <div class="card-header">
+                <label class="p-2">Nueva Forma de Pago</label>
+                <button onclick="location.href = '@Url.Action("PuestoPremiacion", "PuestoPremiacion")'; return false;" class="btn btn-success">Regresar</button>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">ID Puesto de premiación</label>
+                    <input type="text" required class="form-control mb-2" id="idPuesto" name="idPuesto" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">Descripción de puesto</label>
+                    <input type="text" required class="form-control mb-2" id="descripcion" name="descripcion" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+
+        </div>
+    </div>
+</form>
+
+
+

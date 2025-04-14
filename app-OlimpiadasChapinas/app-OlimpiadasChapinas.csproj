@@ -129,6 +129,7 @@
     <Compile Include="Controllers\PaisController.cs" />
     <Compile Include="Controllers\ParticipanteController.cs" />
     <Compile Include="Controllers\PremiacionController.cs" />
+    <Compile Include="Controllers\PuestoPremiacionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -140,6 +141,7 @@
     <Compile Include="Models\csEstructuraPais.cs" />
     <Compile Include="Models\csEstructuraParticipante.cs" />
     <Compile Include="Models\csEstructuraPremiacion.cs" />
+    <Compile Include="Models\csEstructuraPuestoPremiacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +164,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="JS\jsPuestoPremiacion.js" />
     <Content Include="JS\jsFormaPago.js" />
     <Content Include="JS\jsDeporte.js" />
     <Content Include="JS\jsEvento.js" />
@@ -225,6 +228,9 @@
     <Content Include="Views\Premiacion\Premiacion.cshtml" />
     <Content Include="Views\Premiacion\newPremiacion.cshtml" />
     <Content Include="Views\Premiacion\ActualizarPremiacion.cshtml" />
+    <Content Include="Views\PuestoPremiacion\PuestoPremiacion.cshtml" />
+    <Content Include="Views\PuestoPremiacion\newPuestoPremiacion.cshtml" />
+    <Content Include="Views\PuestoPremiacion\ActualizarPuestoPremiacion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
