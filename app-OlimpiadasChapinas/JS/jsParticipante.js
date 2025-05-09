@@ -22,7 +22,7 @@
         respuesta += "\n{Peso}";
     }
 
-    if ($("#genero").val().trim() == "") {
+    if ($("#genero").val().trim() == "" || $("#genero").val() == null) {
         respuesta += "\n{Genero}";
     }
 

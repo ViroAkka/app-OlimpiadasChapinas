@@ -1,6 +1,8 @@
-﻿
+﻿@model  app_OlimpiadasChapinas.Models.csDataSets
+
 @{
     ViewBag.Title = "newEvento";
+    ViewBag.BodyClass = "vista";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,12 +10,12 @@
     <script src="~/JS/jsEvento.js"></script>
 }
 
-<h2>Registro de Nuevos Eventos</h2>
+<h2 class="table-title">Registro de Nuevos Eventos</h2>
 
-<form action="/Evento/Guardar" method="post">
+<form class="contenedor form-principal" action="/Evento/Guardar" method="post">
     <div>
-        <div class="card border-primary">
-            <div class="card-header">
+        <div class="formulario card border-primary">
+            <div class="card-header formulario-header">
                 <label class="p-2">Nuevo Evento</label>
                 <button onclick="location.href = '@Url.Action("Evento", "Evento")'; return false;" class="btn btn-success">Regresar</button>
             </div>
@@ -28,46 +30,76 @@
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">ID Deporte</label>
-                    <input type="number" required class="form-control mb-2" id="idDeporte" name="idDeporte" />
+                    <select type="number" required class="form-control lista-opciones mb-2" id="idDeporte" name="idDeporte">
+                        <option disabled selected>----Seleccionar una opción----</option>
+                        @if (Model.Deporte.Tables.Count > 0)
+                        {
+                            if (Model.Deporte.Tables[0].Rows.Count > 0)
+                            {
+                                for (int x = 0; x < Model.Deporte.Tables[0].Rows.Count; x++)
+                                {
+                                    <option>@Model.Deporte.Tables[0].Rows[x]["idDeporte"].ToString() - @Model.Deporte.Tables[0].Rows[x]["nombre"].ToString()</option>
+                                }
+                            }
+                        }
+                    <</select>
                 </div>
             </div>
 
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">ID del Evento Principal</label>
-                    <input type="number" class="form-control mb-2" id="idEventoPadre" name="idEventoPadre" />
+                    <select type="number" class="form-control mb-2 lista-opciones" id="idEventoPadre" name="idEventoPadre">
+                        <option disabled selected>----Seleccionar una opción----</option>
+                        <option>0 - Sin evento principal</option>
+                        @if (Model.Evento.Tables.Count > 0)
+                        {
+                            if (Model.Evento.Tables[0].Rows.Count > 0)
+                            {
+                                for (int x = 0; x < Model.Evento.Tables[0].Rows.Count; x++)
+                                {
+                                    if (Model.Evento.Tables[0].Rows[x]["idEventoPadre"].ToString() == "" )
+                                    {
+                                        <option>@Model.Evento.Tables[0].Rows[x]["idEvento"].ToString() - @Model.Evento.Tables[0].Rows[x]["nombre"].ToString()</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
                 </div>
             </div>
 
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">Fecha de inicio del Evento</label>
-                    <input type="text" required class="form-control mb-2" id="fechaInicio" name="fechaInicio" />
+                    <input type="date" required class="form-control mb-2" id="fechaInicio" name="fechaInicio" />
                 </div>
             </div>
 
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">Fecha de fin del Evento</label>
-                    <input type="text" required class="form-control mb-2" id="fechaFin" name="fechaFin" />
+                    <input type="date" required class="form-control mb-2" id="fechaFin" name="fechaFin" />
                 </div>
             </div>
 
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">Cantidad de participantes</label>
-                    <input type="number" required class="form-control mb-2" id="cantidadParticipantes" name="cantidadParticipantes" />
+                    <input type="number" required class="form-control mb-2" id="cantidadParticipantes" name="cantidadParticipantes" min="2" max="32"/>
                 </div>
             </div>
 
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">Monto de Inscripción</label>
-                    <input type="number" required class="form-control mb-2" id="montoInscripcion" name="montoInscripcion" />
+                    <input type="number" required class="form-control mb-2" id="montoInscripcion" name="montoInscripcion"  min="0" max="1000"/>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            <div class="contenedor-btn">
+                <button type="submit" class="btn btn-primary btn-guardar" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            </div>
 
         </div>
     </div>

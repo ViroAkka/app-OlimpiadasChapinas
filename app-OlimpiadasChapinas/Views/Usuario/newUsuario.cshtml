@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "newUsuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    <script src="~/JS/jsUsuario.js"></script>
+}
+
+<h2>Registro de Nuevos Usuarios</h2>
+
+<form action="/Usuario/Guardar" method="post">
+    <div>
+        <div class="card border-primary">
+            <div class="card-header">
+                <label class="p-2">Nuevo Usuario</label>
+                <button onclick="location.href = '@Url.Action("Usuario", "Usuario")'; return false;" class="btn btn-success">Regresar</button>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Nombre</label>
+                    <input type="text" required class="form-control mb-2" id="nombre" name="nombre" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">Apellido</label>
+                    <input type="text" required class="form-control mb-2" id="apellido" name="apellido" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">Email</label>
+                    <input type="email" required class="form-control mb-2" id="email" name="email" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">Contraseña</label>
+                    <input type="password" required class="form-control mb-2" id="contraseña_hash" name="contraseña_hash" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">Teléfono</label>
+                    <input type="tel" required class="form-control mb-2" id="telefono" name="telefono" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">DNI</label>
+                    <input type="text" required class="form-control mb-2" id="DNI" name="DNI" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+
+        </div>
+    </div>
+</form>
+
+
+

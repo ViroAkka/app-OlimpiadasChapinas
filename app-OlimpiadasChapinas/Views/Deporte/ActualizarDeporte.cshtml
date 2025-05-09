@@ -2,19 +2,22 @@
 
 @{
     ViewBag.Title = "ActualizarDeporte";
+    ViewBag.BodyClass = "vista";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var categoria = Model.Tables[0].Rows[0]["categoria"].ToString().Trim();
 }
 
 @section scripts {
     <script src="~/JS/jsDeporte.js"></script>
 }
 
-<h2>Actualización de Deportes</h2>
+<h2 class="table-title">Actualización de Deportes</h2>
 
-<form action="/Deporte/actualizar" method="post">
+<form class="contenedor form-principal" action="/Deporte/actualizar" method="post">
     <div>
-        <div class="card border-primary">
-            <div class="card-header">
+        <div class="formulario card border-primary">
+            <div class="card-header formulario-header">
                 <label class="p-2">Actualizar Deporte</label>
                 <button onclick="location.href = '@Url.Action("Deporte", "Deporte")'; return false;" class="btn btn-success">Regresar</button>
             </div>
@@ -34,10 +37,12 @@
             </div>
 
             <div class="col" align="center">
-                <div class="form-group">
-                    <label class="p-2">Categoría</label>
-                    <input type="text" value="@Model.Tables[0].Rows[0]["categoria"].ToString()" required class="form-control mb-2" id="categoria" name="categoria" />
-                </div>
+                <label class="p-2">Categoría</label>
+                <select type="text" required class="form-control mb-2 lista-opciones" id="categoria" name="categoria">
+                    <option disabled @(categoria != "Individual" && categoria != "Colectivo" ? "selected" : "")>----Seleccionar una opción----</option>
+                    <option @(categoria == "Individual" ? "selected" : "")>Individual</option>
+                    <option @(categoria == "Colectivo" ? "selected" : "")>Colectivo</option>
+                </select>
             </div>
 
             <div class="col" align="center">
@@ -54,7 +59,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            <div class="contenedor-btn">
+                <button type="submit" class="btn btn-primary btn-guardar" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            </div>
 
         </div>
     </div>

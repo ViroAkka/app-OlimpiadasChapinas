@@ -1,0 +1,317 @@
+﻿/* Globales */
+html, body {
+    height: 100%;
+    overflow-y: auto;
+}
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+}
+
+.contenedor {
+    width: 95%;
+    max-width: 120rem;
+    margin: 0 auto;
+}
+
+h1, h2, h3 {
+    margin: 0 0 5rem 0;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 3.6rem;
+}
+
+h3 {
+    font-size: 3rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+p {
+    font-size: 2rem;
+    color: #000000;
+    line-height: 1.6;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+}
+
+/* Video */
+.video {
+    max-height: 70rem;
+    min-height: 50rem;
+    overflow: hidden;
+    position: relative;
+    z-index: 0;
+}
+
+.video .overlay {
+    background: #2A7B9B;
+    background: linear-gradient(90deg,rgba(42, 123, 155, 0.33) 0%, rgba(87, 199, 133, 0.48) 50%, rgba(237, 221, 83, 0.5) 100%);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
+.video video {
+    z-index: 0;
+    position: relative;
+    display: block;
+    width: auto;
+}
+
+@media (min-width:992px) {
+    .video video {
+        width: 100%
+    }
+}
+
+.video-content {
+    z-index: 1
+}
+
+.video-content h2 {
+    color: #fff;
+    font-size: 7rem;
+    margin-bottom: 0
+}
+
+.video-content p {
+    background-color: #044223;
+    color: #fff;
+    display: inline-block;
+    font-size: 2.4rem;
+    font-weight: 700;
+    padding: 1rem 2rem
+}
+
+.olimpiada {
+    margin: 5rem 0;
+}
+
+@media (min-width: 768px) {
+    .olimpiada-content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5rem;
+    }
+}
+
+.olimpiada-text .olimpiada-title {
+    font-weight: bold;
+}
+
+.olimpiada-text .date {
+    margin: 0;
+    color: green;
+    font-weight: 700;
+}
+
+.lineUp {
+    background-color: #343B52;
+    padding: 5rem 0;
+}
+
+.lineUp h2,
+.lineUp p {
+    text-align: center;
+    color: white;
+}
+
+.lineUp .date {
+    text-transform: uppercase;
+    margin: 5rem;
+}
+
+@media (min-width: 768px) {
+    .lineUp .escenarios-contenedor {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.lineUp .escenarios-contenedor p {
+    color: black;
+
+}
+
+.escenario {
+    padding-top: 2rem;
+}
+
+.escenario .nombre-escenario:after {
+    content: '';
+    display: block;
+    width: 20rem;
+    height: 15rem;
+    background-size: 15rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin: 2rem auto 0 auto;
+}
+
+.sport .nombre-escenario:after {
+    background-image: url("../img/trophy.svg");
+}
+
+.cal {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cal li {
+    padding: 2.5rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.cal li span {
+    font-weight: 400;
+}
+
+.escenario {
+    background-color: #48DB86;
+}
+
+.green-bg li:nth-child(odd) {
+    background-color: #37A163;
+}
+
+/* Vista funciona para todos las vistas que se coloque*/
+.vista {
+    background-image: url("../img/bg.png");
+    background-repeat: repeat;
+    background-size: contain;
+}
+
+/* Este apartado es para la vista de las tablas */
+.table-title {
+    text-align: center;
+    margin: 3.5rem 0; 
+    font-weight: bold;
+}
+
+.card-header button {
+    font-size: 1.6rem;
+}
+
+.tabla-principal {
+    background-color: #25283B;
+    color: white;
+}
+
+.tabla-principal tr {
+    text-align: center;
+}
+
+.tabla-principal th {
+    padding: 0.5rem 0.5rem;
+}
+
+.tabla-principal thead,
+.tabla-principal tbody {
+    background-color: #25283B;
+    color: #EBECF0;
+    border-bottom: 2px solid white;
+
+}
+
+.datos td {
+    border-right: 1px solid white;
+    padding: 1rem 1.5rem;
+}
+.datos td:last-of-type {
+    border-right: none;
+}
+.datos tr:nth-child(odd) {
+    background-color: #050202;
+}
+
+.btn-button {
+    font-size: 1.6rem;
+    padding: 1rem 1.5rem;
+}
+
+/* Para la vista de insertar nuevo y actualizar */
+.form-principal {
+    color: #EBECF0;
+    font-size: 1.5rem;
+    width: 65%;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.formulario {
+    background-color: #25283B;
+}
+
+.formulario div {
+    margin-bottom: 1rem;
+
+}
+
+.formulario-header{
+    border-bottom: 0.4px solid white;
+}
+
+.form-group input {
+    width: 100%;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.lista-opciones {
+    text-align: center; 
+    font-size: 1.5rem;
+}
+
+.lista-opciones option {
+    background-color: #007BFF;
+    color: #EBECF0;
+    text-align: center;
+    border-bottom: 0.4px solid black;
+}
+
+.lista-opciones option:hover {
+    background-color: #25283B;
+}
+
+.btn-guardar {
+    
+    font-size: 1.5rem;
+    width: 300px;
+    text-align: center
+}
+
+.contenedor-btn {
+    display: flex;
+    justify-content: center;
+    gap: 2rem
+}

@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "ActualizarParticipante";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var genero = Model.Tables[0].Rows[0]["genero"].ToString().Trim().ToUpper();
 }
 
 @section scripts {
@@ -52,11 +53,11 @@
 
                 <div class="form-group">
                     <label class="p-2">Género</label>
-                    <select  value="@Model.Tables[0].Rows[0]["genero"].ToString()" class="form-control mb-2" required id="genero" name="genero">
-                        <option disabled selected>-- Seleccionar opción --</option>
-                        <option>F</option>
-                        <option>M</option>
-                        <option>Otro</option>
+                    <select class="form-control mb-2" required id="genero" name="genero">
+                        <option disabled @(genero != "F" && genero != "M" && genero != "OTRO" ? "selected" : "")>-- Seleccionar opción --</option>
+                        <option value="F" @(genero == "F" ? "selected" : "")>F</option>
+                        <option value="M" @(genero == "M" ? "selected" : "")>M</option>
+                        <option value="Otro" @(genero == "OTRO" ? "selected" : "")>Otro</option>
                     </select>
                 </div>
             </div>

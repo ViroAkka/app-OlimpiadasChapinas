@@ -130,9 +130,11 @@
     <Compile Include="Controllers\ParticipanteController.cs" />
     <Compile Include="Controllers\PremiacionController.cs" />
     <Compile Include="Controllers\PuestoPremiacionController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\csDataSets.cs" />
     <Compile Include="Models\csEstructuraDeporte.cs" />
     <Compile Include="Models\csEstructuraEvento.cs" />
     <Compile Include="Models\csEstructuraFormaPago.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Models\csEstructuraParticipante.cs" />
     <Compile Include="Models\csEstructuraPremiacion.cs" />
     <Compile Include="Models\csEstructuraPuestoPremiacion.cs" />
+    <Compile Include="Models\csEstructuraUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +164,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="CSS\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -173,6 +177,7 @@
     <Content Include="JS\jsPais.js" />
     <Content Include="JS\jsParticipante.js" />
     <Content Include="JS\jsPremiacion.js" />
+    <Content Include="JS\jsUsuario.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -231,9 +236,15 @@
     <Content Include="Views\PuestoPremiacion\PuestoPremiacion.cshtml" />
     <Content Include="Views\PuestoPremiacion\newPuestoPremiacion.cshtml" />
     <Content Include="Views\PuestoPremiacion\ActualizarPuestoPremiacion.cshtml" />
+    <Content Include="Views\Usuario\Usuario.cshtml" />
+    <Content Include="Views\Usuario\newUsuario.cshtml" />
+    <Content Include="Views\Usuario\ActualizarUsuario.cshtml" />
+    <Content Include="Views\Inscripcion\newInscripcionFromIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="img\" />
+    <Folder Include="Video\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

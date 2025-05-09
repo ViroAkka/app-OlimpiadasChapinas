@@ -1,16 +1,22 @@
 ﻿@model System.Data.DataSet
+
 @{
     ViewBag.Title = "Evento";
+    ViewBag.BodyClass = "vista";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Mantenimiento de Eventos</h2>
-<form method="post" action="@Url.Action("Evento", "Evento")">
-    <div class="card border-primary">
+@section scripts {
+    <script src="~/JS/jsEvento.js"></script>
+}
+
+<h2 class="contenedor table-title">Mantenimiento de Eventos</h2>
+<form method="post" action="@Url.Action("Evento", "Evento")" class="contenedor">
+    <div class="card border-primary tabla-principal">
         <div class="card-header">
             <label class="p-2">Eventos</label>
-            <input type="text" id="idEvento" name="idEvento" placeholder="Escribe el ID del Evento" />
-            <button type="submit" class="btn btn-default">Buscar</button>
+            <input type="text" id="idEvento" name="idEvento" placeholder="" />
+            <button type="submit" class="btn btn-light">Buscar</button>
             <button onclick="location.href = '@Url.Action("newEvento", "Evento")'; return false" class="btn btn-success">Nuevo</button>
         </div>
 
@@ -30,7 +36,7 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="datos">
                 @if (Model.Tables.Count > 0)
                 {
                     if (Model.Tables[0].Rows.Count > 0)
@@ -46,8 +52,8 @@
                                 <td class="table-active">@Model.Tables[0].Rows[x]["fechaFin"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["cantidadParticipantes"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["montoInscripcion"]</td>
-                                <td><button type="button" class="btn btn-warning" onclick="location.href = '@Url.Action("ActualizarEvento", "Evento", new { idEvento = Model.Tables[0].Rows[x]["idEvento"].ToString() })'; return false;">Actualizar</button></td>
-                                <td><button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("Eliminar", "Evento", new { idEvento = Model.Tables[0].Rows[x]["idEvento"].ToString() })'; return false;">Eliminar</button></td>
+                                <td><button type="button" class="btn btn-warning btn-button" onclick="location.href = '@Url.Action("ActualizarEvento", "Evento", new { idEvento = Model.Tables[0].Rows[x]["idEvento"].ToString() })'; return false;">Actualizar</button></td>
+                                <td><button type="button" class="btn btn-danger btn-button" onclick="location.href = '@Url.Action("Eliminar", "Evento", new { idEvento = Model.Tables[0].Rows[x]["idEvento"].ToString() })'; return false;">Eliminar</button></td>
                             </tr>
                         }
                     }

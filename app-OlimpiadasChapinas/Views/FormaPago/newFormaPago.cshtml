@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "newFormaPago";
+    ViewBag.BodyClass = "vista";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,12 +9,12 @@
     <script src="~/JS/jsFormaPago.js"></script>
 }
 
-<h2>Registro de Nuevas Formas de Pago</h2>
+<h2 class="table-title">Registro de Nuevas Formas de Pago</h2>
 
-<form action="/FormaPago/Guardar" method="post">
+<form class="contenedor form-principal" action="/FormaPago/Guardar" method="post">
     <div>
-        <div class="card border-primary">
-            <div class="card-header">
+        <div class="formulario card border-primary">
+            <div class="card-header formulario-header">
                 <label class="p-2">Nueva Forma de Pago</label>
                 <button onclick="location.href = '@Url.Action("FormaPago", "FormaPago")'; return false;" class="btn btn-success">Regresar</button>
             </div>
@@ -25,7 +26,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            <div class="contenedor-btn">
+                <button type="submit" class="btn btn-primary btn-guardar" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            </div>
 
         </div>
     </div>

@@ -1,13 +1,63 @@
-﻿@{
+﻿@model System.Data.DataSet
+
+@{
     ViewBag.Title = "Home Page";
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        
-
-    <div class="row">
-        
+<div class="video">
+    <div class="overlay">
+        <div class="contenedor video-content">
+            <h2 class="mb-4">Olimpiadas Chapinas</h2>
+            <p>Guatemala</p>
+        </div>
     </div>
-</main>
+    <video autoplay muted loop>
+        <source src="@Url.Content("~/Video/video.mp4")" type="video/mp4" />
+    </video>
+</div>
+
+<section class="olimpiada">
+    <div class="contenedor olimpiada-content">
+        <div class="olimpiada-img">
+            <img loading="lazy"
+                 width="200"
+                 height="300"
+                 src="@Url.Content("~/img/corredor.jpg")"
+                 alt="Corredor preparándose." />
+        </div>
+        <div class="olimpiada-text">
+            <h2 class="olimpiada-title">Olimpiadas Chapinas</h2>
+            <p class="date">Mayo 2025, Guatemala</p>
+            <p>
+                Las verdaderas olimpiadas han llegado a Guatemala, ¿quieres demostrar todo
+                tu pontencial y talento? Inscríbete ahora mismo a los torneos que se encuentran
+                disponibles y consigue tus metas.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="lineUp" class="lineUp">
+    <h2>Eventos disponibles</h2>
+    <p class="date">Inscríbete ya</p>
+    <div class="escenarios-contenedor contenedor">
+        <div class="escenario sport green-bg">
+            <p class="nombre-escenario">Fechas</p>
+
+            <ul class="cal">
+                
+                @if (Model.Tables.Count > 0)
+                {
+                    if (Model.Tables[0].Rows.Count > 0)
+                    {
+                        for (int x = 0; x < Model.Tables[0].Rows.Count; x++)
+                        {
+                            <li onclick="location.href = '@Url.Action("newInscripcion", "Inscripcion")'">@Model.Tables[0].Rows[x]["fechaInicio"] | <span>@Model.Tables[0].Rows[x]["nombre"]</span></li>
+                        }
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+        <!--eventos-->        
+</section>

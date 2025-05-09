@@ -95,7 +95,7 @@ namespace app_OlimpiadasChapinas.Controllers
         public ActionResult ActualizarParticipante(int idParticipante)
         {
             DataSet data = new DataSet();
-            var url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarParticipante?idParticipante={idParticipante}";
+            var url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarParticipantePorID?idParticipante={idParticipante}";
 
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";

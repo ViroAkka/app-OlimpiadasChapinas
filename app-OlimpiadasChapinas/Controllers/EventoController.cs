@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using static app_OlimpiadasChapinas.Models.csEstructuraEvento;
 using System.Threading.Tasks;
+using app_OlimpiadasChapinas.Models;
 
 namespace app_OlimpiadasChapinas.Controllers
 {
@@ -55,7 +56,30 @@ namespace app_OlimpiadasChapinas.Controllers
 
         public ActionResult newEvento()
         {
-            return View();
+            DataSet deportes = new DataSet();
+            DataSet eventos = new DataSet();
+
+            string urlDeportes = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarDeporte";
+            string urlEventos = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarEvento";
+               
+            try
+            {
+                deportes = createDataSet(urlDeportes);
+
+                eventos = createDataSet(urlEventos);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocurrió un error: {ex.Message}");
+            }
+
+            var model = new csDataSets
+            {
+                Deporte = deportes,
+                Evento = eventos
+            };
+
+            return View(model);
         }
 
         public ActionResult Guardar(FormCollection form)
@@ -64,8 +88,8 @@ namespace app_OlimpiadasChapinas.Controllers
             string resultJson = "";
             Byte[] reqByte, resByte;
             requestEvento InsertarEvento = new requestEvento();
-            InsertarEvento.idDeporte = int.Parse(form["idDeporte"]);
-            InsertarEvento.idEventoPadre = int.Parse(form["idEventoPadre"]);
+            InsertarEvento.idDeporte = returnID(form["idDeporte"]);
+            InsertarEvento.idEventoPadre = returnID(form["idEventoPadre"]);
             InsertarEvento.nombre = form["nombre"];
             InsertarEvento.fechaInicio = form["fechaInicio"];
             InsertarEvento.fechaFin = form["fechaFin"];
@@ -96,34 +120,33 @@ namespace app_OlimpiadasChapinas.Controllers
         public ActionResult ActualizarEvento(string idEvento)
         {
             DataSet data = new DataSet();
+            DataSet deportes = new DataSet();
+            DataSet eventos = new DataSet();
+
             var url = $"http://localhost/api-OlimpiadasChapinas/rest/api/listarEventoPorID?idEvento={idEvento}";
 
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-            request.ContentType = "application/json";
-            request.Accept = "application/json";
-            string responseBody = "";
+            string urlDeportes = $"http://localhost/api-OlimpiadasChapinas/rest/api/listarDeporte";
+            string urlEventos= $"http://localhost/api-OlimpiadasChapinas/rest/api/listarEvento";
 
             try
             {
-                using (WebResponse response = request.GetResponse())
-                {
-                    using (Stream strReader = response.GetResponseStream())
-                    {
-                        using (StreamReader objReader = new StreamReader(strReader))
-                        {
-                            responseBody = objReader.ReadToEnd();
-                        }
-                    }
-                    data = JsonConvert.DeserializeObject<DataSet>(responseBody) ?? new DataSet();
-                }
+                data = createDataSet(url);
+                deportes = createDataSet(urlDeportes);
+                eventos = createDataSet(urlEventos);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Ocurrió un error: {ex.Message}");
             }
 
-            return View(data);
+            var model = new csDataSets
+            {
+                Data = data,
+                Deporte = deportes,
+                Evento = eventos
+            };
+
+            return View(model);
         }
 
         public async Task<ActionResult> Actualizar(FormCollection form)
@@ -132,8 +155,8 @@ namespace app_OlimpiadasChapinas.Controllers
             string resultJson = "";
             requestEvento ActualizarEvento = new requestEvento();
             ActualizarEvento.idEvento = int.Parse(form["idEvento"]);
-            ActualizarEvento.idDeporte = int.Parse(form["idDeporte"]);
-            ActualizarEvento.idEventoPadre = int.Parse(form["idEventoPadre"]);
+            ActualizarEvento.idDeporte = returnID(form["idDeporte"]);
+            ActualizarEvento.idEventoPadre = returnID(form["idEventoPadre"]);
             ActualizarEvento.nombre = form["nombre"];
             ActualizarEvento.fechaInicio = form["fechaInicio"];
             ActualizarEvento.fechaFin = form["fechaFin"];
@@ -192,5 +215,41 @@ namespace app_OlimpiadasChapinas.Controllers
 
             return RedirectToAction("Evento", "Evento");
         }
+
+        static DataSet createDataSet(string url)
+        {
+            DataSet data = new DataSet();
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+            request.Accept = "application/json";
+
+            using (WebResponse response = request.GetResponse())
+            {
+                using (Stream strReader = response.GetResponseStream())
+                {
+                    using (StreamReader objReader = new StreamReader(strReader))
+                    {
+                        string responseBody = objReader.ReadToEnd();
+                        data = JsonConvert.DeserializeObject<DataSet>(responseBody) ?? new DataSet();
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        static int returnID(string opcion)
+        {
+            int id = 0;
+            string[] datos = new string[2];
+
+            datos = opcion.Split('-');
+
+            id = int.Parse(datos[0]);
+
+            return id;
+        }
     }
 }
+

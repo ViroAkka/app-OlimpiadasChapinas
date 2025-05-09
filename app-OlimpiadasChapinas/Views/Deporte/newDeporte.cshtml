@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "newDeporte";
+    ViewBag.BodyClass = "vista";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,12 +9,12 @@
     <script src="~/JS/jsDeporte.js"></script>
 }
 
-<h2>Registro de Nuevos Deportes</h2>
+<h2 class="table-title">Registro de Nuevos Deportes</h2>
 
-<form action="/Deporte/guardar" method="post">
-    <div>
-        <div class="card border-primary">
-            <div class="card-header">
+<form class="contenedor form-principal" action="/Deporte/guardar" method="post">
+    <div >
+        <div class="formulario card border-primary">
+            <div class="card-header formulario-header">
                 <label class="p-2">Nuevo Deporte</label>
                 <button onclick="location.href = '@Url.Action("Deporte", "Deporte")'; return false;" class="btn btn-success">Regresar</button>
             </div>
@@ -28,7 +29,11 @@
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">Categoría</label>
-                    <input type="text" required class="form-control mb-2" id="categoria" name="categoria" />
+                    <select type="text" required class="form-control mb-2 lista-opciones" id="categoria" name="categoria" >
+                        <option disabled selected>----Seleccionar una opción----</option>
+                        <option>Individual</option>
+                        <option>Colectivo</option>
+                    </select>
                 </div>
             </div>
 
@@ -42,11 +47,13 @@
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">Cantidad de jugadores por equipo</label>
-                    <input type="number" required class="form-control mb-2" id="cantidadJugadores" name="cantidadJugadores" />
+                    <input type="number" required class="form-control mb-2" id="cantidadJugadores" name="cantidadJugadores" min="1" max="11" />
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            <div class="contenedor-btn">
+                <button type="submit" class="btn btn-primary btn-guardar" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            </div>
 
         </div>
     </div>
