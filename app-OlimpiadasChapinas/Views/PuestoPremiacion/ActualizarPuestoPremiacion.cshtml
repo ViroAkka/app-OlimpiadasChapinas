@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "ActualizarPuestoPremiacion";
+    ViewBag.BodyClass = "vista";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,12 +11,12 @@
     <script src="~/JS/jsPuestoPremiacion.js"></script>
 }
 
-<h2>Actualización de puestos</h2>
+<h2 class="contenedor table-title">Actualización de puestos</h2>
 
-<form action="/PuestoPremiacion/Actualizar" method="post">
+<form class="contenedor form-principal" action="/PuestoPremiacion/Actualizar" method="post">
     <div>
-        <div class="card border-primary">
-            <div class="card-header">
+        <div class="formulario card border-primary">
+            <div class="card-header formulario-header">
                 <label class="p-2">Actualizar Forma de Pago</label>
                 <button onclick="location.href = '@Url.Action("PuestoPremiacion", "PuestoPremiacion")'; return false;" class="btn btn-success">Regresar</button>
             </div>
@@ -23,7 +24,7 @@
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">ID Puesto de premiación</label>
-                    <input type="text" value="@Model.Tables[0].Rows[0]["idPuesto"].ToString()" required class="form-control mb-2" id="idPuesto" name="idPuesto" />
+                    <input type="text" readonly value="@Model.Tables[0].Rows[0]["idPuesto"].ToString()" required class="form-control mb-2 input-readonly" id="idPuesto" name="idPuesto" />
                 </div>
 
                 <div class="form-group">
