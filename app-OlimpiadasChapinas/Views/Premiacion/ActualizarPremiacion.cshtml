@@ -1,20 +1,25 @@
-﻿@model System.Data.DataSet
+﻿@model app_OlimpiadasChapinas.Models.csDataSets
 
 @{
     ViewBag.Title = "ActualizarPremiacion";
+    ViewBag.BodyClass = "vista";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var evento = Model.Data.Tables[0].Rows[0]["idEvento"].ToString().Trim();
+    var puesto = Model.Data.Tables[0].Rows[0]["idPuesto"].ToString().Trim();
+    var participante = Model.Data.Tables[0].Rows[0]["idParticipante"].ToString().Trim();
 }
 
 @section scripts {
     <script src="~/JS/jsPremiacion.js"></script>
 }
 
-<h2>Registro de Nuevas Premiaciones</h2>
+<h2 class="contenedor table-title">Registro de Nuevas Premiaciones</h2>
 
-<form action="/Premiacion/Actualizar" method="post">
+<form class="contenedor form-principal" action="/Premiacion/Actualizar" method="post">
     <div>
-        <div class="card border-primary">
-            <div class="card-header">
+        <div class="formulario card border-primary">
+            <div class="card-header formulario-header">
                 <label class="p-2">Actualización de Premiación</label>
                 <button onclick="location.href = '@Url.Action("Premiacion", "Premiacion")'; return false;" class="btn btn-success">Regresar</button>
             </div>
@@ -22,26 +27,78 @@
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">ID de la premiación</label>
-                    <input type="text" value="@Model.Tables[0].Rows[0]["idPremiacion"].ToString()" required class="form-control mb-2" id="idPremiacion" name="idPremiacion" />
+                    <input type="text" readonly value="@Model.Data.Tables[0].Rows[0]["idPremiacion"].ToString()" required class="form-control mb-2 input-readonly" id="idPremiacion" name="idPremiacion" />
                 </div>
 
                 <div class="form-group">
                     <label class="p-2">ID del evento</label>
-                    <input type="text" value="@Model.Tables[0].Rows[0]["idEvento"].ToString()" required class="form-control mb-2" id="idEvento" name="idEvento" />
+                    <select required class="form-control mb-2 lista-opciones" id="idEvento" name="idEvento">
+                        <option>----Seleccionar una opción----</option>
+                        @if (Model.Evento.Tables.Count > 0)
+                        {
+                            if (Model.Evento.Tables[0].Rows.Count > 0)
+                            {
+                                for (int x = 0; x < Model.Evento.Tables[0].Rows.Count; x++)
+                                {
+                                    if (Model.Evento.Tables[0].Rows[x]["idEventoPadre"].ToString() == "")
+                                    {
+                                        <option @(evento == Model.Evento.Tables[0].Rows[x]["idEvento"].ToString() ? "selected" : "")
+                                        >@Model.Evento.Tables[0].Rows[x]["idEvento"].ToString() - @Model.Evento.Tables[0].Rows[x]["nombre"].ToString()</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
                 </div>
 
                 <div class="form-group">
                     <label class="p-2">ID del puesto de premiación</label>
-                    <input type="text" value="@Model.Tables[0].Rows[0]["idPuesto"].ToString()" required class="form-control mb-2" id="idPuesto" name="idPuesto" />
+                    <select type="text" required class="form-control mb-2 lista-opciones" id="idPuesto" name="idPuesto">
+                        <option disabled selected>----Seleccionar una opción----</option>
+                        @if (Model.PuestoPremiacion.Tables.Count > 0)
+                        {
+                            if (Model.PuestoPremiacion.Tables[0].Rows.Count > 0)
+                            {
+                                for (int x = 0; x < Model.PuestoPremiacion.Tables[0].Rows.Count; x++)
+                                {
+                                    <option @(puesto == Model.PuestoPremiacion.Tables[0].Rows[x]["idPuesto"].ToString() ? "selected" : "")
+                                    >@Model.PuestoPremiacion.Tables[0].Rows[x]["idPuesto"].ToString() - @Model.PuestoPremiacion.Tables[0].Rows[x]["descripcion"].ToString()</option>
+                                }
+                            }
+                        }
+                    </select>
                 </div>
 
                 <div class="form-group">
                     <label class="p-2">ID del participante</label>
-                    <input type="text" value="@Model.Tables[0].Rows[0]["idParticipante"].ToString()" required class="form-control mb-2" id="idParticipante" name="idParticipante" />
+                    <select type="text" required class="form-control mb-2 lista-opciones" id="idParticipante" name="idParticipante">
+                        <option disabled selected>----Seleccionar una opción----</option>
+                        @if (Model.Participante.Tables.Count > 0)
+                        {
+                            if (Model.Participante.Tables[0].Rows.Count > 0)
+                            {
+                                for (int x = 0; x < Model.Participante.Tables[0].Rows.Count; x++)
+                                {
+                                    <option @(participante == Model.Participante.Tables[0].Rows[x]["idParticipante"].ToString() ? "selected" : "")>
+                                        @Model.Participante.Tables[0].Rows[x]["idParticipante"].ToString() -
+                                        @for (int y = 0; y < Model.Usuario.Tables[0].Rows.Count; y++)
+                                        {
+                                            if (Model.Participante.Tables[0].Rows[x]["idUsuario"].ToString() == Model.Usuario.Tables[0].Rows[y]["idUsuario"].ToString())
+                                            {
+                                                @(Model.Usuario.Tables[0].Rows[x]["nombre"].ToString() + " ") @(Model.Usuario.Tables[0].Rows[x]["apellido"].ToString())
+                                            }
+                                        }
+                                    </option>
+                                }
+                            }
+                        }
+                    </select>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            <div class="contenedor-btn">
+                <button type="submit" class="btn btn-primary btn-guardar" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            </div>
 
         </div>
     </div>

@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using static app_OlimpiadasChapinas.Models.csEstructuraFormaPago;
 using static app_OlimpiadasChapinas.Models.csEstructuraPremiacion;
+using app_OlimpiadasChapinas.Models;
 
 namespace app_OlimpiadasChapinas.Controllers
 {
@@ -56,7 +57,37 @@ namespace app_OlimpiadasChapinas.Controllers
 
         public ActionResult newPremiacion()
         {
-            return View();
+            DataSet eventos = new DataSet();
+            DataSet puestos = new DataSet();
+            DataSet participantes = new DataSet();
+            DataSet usuarios = new DataSet();
+
+            string urlEventos = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarEvento";
+            string urlPuestos = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPuestoPremiacion";
+            string urlParticipantes = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarParticipante";
+            string urlUsuarios = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarUsuario";
+
+            try
+            {
+                eventos = createDataSet(urlEventos);
+                puestos = createDataSet(urlPuestos);
+                participantes = createDataSet(urlParticipantes);
+                usuarios = createDataSet(urlUsuarios);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocurrió un error: {ex.Message}");
+            }
+
+            csDataSets model = new csDataSets
+            {
+                Evento = eventos,
+                PuestoPremiacion = puestos,
+                Participante = participantes,
+                Usuario = usuarios
+            };
+
+            return View(model);
         }
 
         public ActionResult Guardar(FormCollection form)
@@ -65,9 +96,9 @@ namespace app_OlimpiadasChapinas.Controllers
             string resultJson = "";
             Byte[] reqByte, resByte;
             requestPremiacion InsertarPremiacion = new requestPremiacion();
-            InsertarPremiacion.idEvento = int.Parse(form["idEvento"]);
-            InsertarPremiacion.idPuesto = int.Parse(form["idPuesto"]);
-            InsertarPremiacion.idParticipante = int.Parse(form["idParticipante"]);
+            InsertarPremiacion.idEvento = returnID(form["idEvento"]);
+            InsertarPremiacion.idPuesto = returnID(form["idPuesto"]);
+            InsertarPremiacion.idParticipante = returnID(form["idParticipante"]);
 
             json = JsonConvert.SerializeObject(InsertarPremiacion);
 
@@ -93,34 +124,40 @@ namespace app_OlimpiadasChapinas.Controllers
         public ActionResult ActualizarPremiacion(string idPremiacion)
         {
             DataSet data = new DataSet();
-            var url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPremiacionPorID?idPremiacion={idPremiacion}";
+            DataSet eventos = new DataSet();
+            DataSet puestos = new DataSet();
+            DataSet participantes = new DataSet();
+            DataSet usuarios = new DataSet();
 
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-            request.ContentType = "application/json";
-            request.Accept = "application/json";
-            string responseBody = "";
+            var url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPremiacionPorID?idPremiacion={idPremiacion}";
+            string urlEventos = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarEvento";
+            string urlPuestos = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPuestoPremiacion";
+            string urlParticipantes = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarParticipante";
+            string urlUsuarios = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarUsuario";
 
             try
             {
-                using (WebResponse response = request.GetResponse())
-                {
-                    using (Stream strReader = response.GetResponseStream())
-                    {
-                        using (StreamReader objReader = new StreamReader(strReader))
-                        {
-                            responseBody = objReader.ReadToEnd();
-                        }
-                    }
-                    data = JsonConvert.DeserializeObject<DataSet>(responseBody) ?? new DataSet();
-                }
+                data = createDataSet(url);
+                eventos = createDataSet(urlEventos);
+                puestos = createDataSet(urlPuestos);
+                participantes = createDataSet(urlParticipantes);
+                usuarios = createDataSet(urlUsuarios);                
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Ocurrió un error: {ex.Message}");
             }
 
-            return View(data);
+            csDataSets model = new csDataSets
+            {
+                Data = data,
+                Evento = eventos,
+                PuestoPremiacion = puestos,
+                Participante = participantes,
+                Usuario = usuarios
+            };
+
+            return View(model);
         }
 
         public async Task<ActionResult> Actualizar(FormCollection form)
@@ -129,9 +166,9 @@ namespace app_OlimpiadasChapinas.Controllers
             string resultJson = "";
             requestPremiacion ActualizarPremiacion = new requestPremiacion();
             ActualizarPremiacion.idPremiacion = int.Parse(form["idPremiacion"]);
-            ActualizarPremiacion.idEvento = int.Parse(form["idEvento"]);
-            ActualizarPremiacion.idPuesto = int.Parse(form["idPuesto"]);
-            ActualizarPremiacion.idParticipante = int.Parse(form["idParticipante"]);
+            ActualizarPremiacion.idEvento = returnID(form["idEvento"]);
+            ActualizarPremiacion.idPuesto = returnID(form["idPuesto"]);
+            ActualizarPremiacion.idParticipante = returnID(form["idParticipante"]);
 
             json = JsonConvert.SerializeObject(ActualizarPremiacion);
 
@@ -184,6 +221,41 @@ namespace app_OlimpiadasChapinas.Controllers
             client.Dispose();
 
             return RedirectToAction("Premiacion", "Premiacion");
+        }
+
+        static DataSet createDataSet(string url)
+        {
+            DataSet data = new DataSet();
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+            request.Accept = "application/json";
+
+            using (WebResponse response = request.GetResponse())
+            {
+                using (Stream strReader = response.GetResponseStream())
+                {
+                    using (StreamReader objReader = new StreamReader(strReader))
+                    {
+                        string responseBody = objReader.ReadToEnd();
+                        data = JsonConvert.DeserializeObject<DataSet>(responseBody) ?? new DataSet();
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        static int returnID(string opcion)
+        {
+            int id = 0;
+            string[] datos = new string[2];
+
+            datos = opcion.Split('-');
+
+            id = int.Parse(datos[0]);
+
+            return id;
         }
     }
 }
