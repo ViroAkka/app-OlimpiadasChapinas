@@ -287,8 +287,16 @@ img {
     text-align: center;
 }
 
+.input-readonly {
+    background-color: #BFBFBF;
+}
+
+.seccion-form-title {
+    font-size: 2.5rem;
+}
+
 .lista-opciones {
-    text-align: center; 
+    text-align: center;
     font-size: 1.5rem;
 }
 

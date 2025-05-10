@@ -26,7 +26,7 @@
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">ID del Evento</label>
-                    <input type="text" value="@Model.Data.Tables[0].Rows[0]["idEvento"].ToString()" required class="form-control mb-2" id="idEvento" name="idEvento" />
+                    <input type="text" readonly value="@Model.Data.Tables[0].Rows[0]["idEvento"].ToString()" required class="form-control mb-2 input-readonly" id="idEvento" name="idEvento" />
                 </div>
             </div>
 

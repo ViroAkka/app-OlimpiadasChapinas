@@ -239,7 +239,6 @@
     <Content Include="Views\Usuario\Usuario.cshtml" />
     <Content Include="Views\Usuario\newUsuario.cshtml" />
     <Content Include="Views\Usuario\ActualizarUsuario.cshtml" />
-    <Content Include="Views\Inscripcion\newInscripcionFromIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
