@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using static app_OlimpiadasChapinas.Models.csEstructuraParticipante;
+using app_OlimpiadasChapinas.Models;
 
 namespace app_OlimpiadasChapinas.Controllers
 {
@@ -55,7 +56,29 @@ namespace app_OlimpiadasChapinas.Controllers
 
         public ActionResult newParticipante()
         {
-            return View();
+            DataSet paises = new DataSet();
+            DataSet usuarios = new DataSet();
+
+            string urlPaises = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPais";
+            string urlUsuarios = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarUsuario";
+
+            try
+            {
+                paises = createDataSet(urlPaises);
+                usuarios = createDataSet(urlUsuarios);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocurrió un error: {ex.Message}");
+            }
+
+            csDataSets model = new csDataSets
+            {
+                Pais = paises,
+                Usuario = usuarios
+            };
+
+            return View(model);
         }
 
         public ActionResult Guardar(FormCollection form)
@@ -64,8 +87,8 @@ namespace app_OlimpiadasChapinas.Controllers
             string resultJson = "";
             Byte[] reqByte, resByte;
             requestParticipante InsertarParticipante = new requestParticipante();
-            InsertarParticipante.idPais = form["idPais"];
-            InsertarParticipante.idUsuario = int.Parse(form["idUsuario"]);
+            InsertarParticipante.idPais = returnIDPais(form["idPais"]);
+            InsertarParticipante.idUsuario = returnID(form["idUsuario"]);
             InsertarParticipante.fechaNacimiento = form["fechaNacimiento"];
             InsertarParticipante.altura = double.Parse(form["altura"]);
             InsertarParticipante.peso = double.Parse(form["peso"]);
@@ -95,34 +118,32 @@ namespace app_OlimpiadasChapinas.Controllers
         public ActionResult ActualizarParticipante(int idParticipante)
         {
             DataSet data = new DataSet();
-            var url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarParticipantePorID?idParticipante={idParticipante}";
+            DataSet paises = new DataSet();
+            DataSet usuarios = new DataSet();
 
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-            request.ContentType = "application/json";
-            request.Accept = "application/json";
-            string responseBody = "";
+            var url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarParticipantePorID?idParticipante={idParticipante}";
+            var urlPaises = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPais";
+            var urlUsuarios = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarUsuario";
 
             try
             {
-                using (WebResponse response = request.GetResponse())
-                {
-                    using (Stream strReader = response.GetResponseStream())
-                    {
-                        using (StreamReader objReader = new StreamReader(strReader))
-                        {
-                            responseBody = objReader.ReadToEnd();
-                        }
-                    }
-                    data = JsonConvert.DeserializeObject<DataSet>(responseBody) ?? new DataSet();
-                }
+                data = createDataSet(url);
+                paises = createDataSet(urlPaises);
+                usuarios = createDataSet(urlUsuarios);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Ocurrió un error: {ex.Message}");
             }
 
-            return View(data);
+            csDataSets model = new csDataSets
+            {
+                Data = data,
+                Pais = paises,
+                Usuario = usuarios
+            };
+
+            return View(model);
         }
 
         public async Task<ActionResult> Actualizar(FormCollection form)
@@ -130,9 +151,9 @@ namespace app_OlimpiadasChapinas.Controllers
             string json = "";
             string resultJson = "";
             requestParticipante ActualizarParticipante = new requestParticipante();
-            ActualizarParticipante.idParticipante = int.Parse(form["idParticipante"]);
-            ActualizarParticipante.idPais = form["idPais"];
-            ActualizarParticipante.idUsuario = int.Parse(form["idUsuario"]);
+            ActualizarParticipante.idParticipante = returnID(form["idParticipante"]);
+            ActualizarParticipante.idPais = returnIDPais(form["idPais"]);
+            ActualizarParticipante.idUsuario = returnID(form["idUsuario"]);
             ActualizarParticipante.fechaNacimiento = form["fechaNacimiento"];
             ActualizarParticipante.altura = double.Parse(form["altura"]);
             ActualizarParticipante.peso = double.Parse(form["peso"]);
@@ -189,6 +210,53 @@ namespace app_OlimpiadasChapinas.Controllers
             client.Dispose();
 
             return RedirectToAction("Participante", "Participante");
+        }
+
+        static DataSet createDataSet(string url)
+        {
+            DataSet data = new DataSet();
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+            request.Accept = "application/json";
+
+            using (WebResponse response = request.GetResponse())
+            {
+                using (Stream strReader = response.GetResponseStream())
+                {
+                    using (StreamReader objReader = new StreamReader(strReader))
+                    {
+                        string responseBody = objReader.ReadToEnd();
+                        data = JsonConvert.DeserializeObject<DataSet>(responseBody) ?? new DataSet();
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        static int returnID(string opcion)
+        {
+            int id = 0;
+            string[] datos = new string[2];
+
+            datos = opcion.Split('-');
+
+            id = int.Parse(datos[0]);
+
+            return id;
+        }
+
+        static string returnIDPais(string opcion)
+        {
+            string id = "";
+            string[] datos = new string[2];
+
+            datos = opcion.Split('-');
+
+            id = datos[0];
+
+            return id;
         }
     }
 }

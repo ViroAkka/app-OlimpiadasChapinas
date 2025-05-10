@@ -1,6 +1,8 @@
-﻿
+﻿@model app_OlimpiadasChapinas.Models.csDataSets
+
 @{
     ViewBag.Title = "newParticipante";
+    ViewBag.BodyClass = "vista";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,12 +10,12 @@
     <script src="~/JS/jsParticipante.js"></script>
 }
 
-<h2>Registro de nuevos Participantes</h2>
+<h2 class="contenedor table-title">Registro de nuevos Participantes</h2>
 
-<form action="/Participante/Guardar" method="post">
+<form class="contenedor form-principal" action="/Participante/Guardar" method="post">
     <div>
-        <div class="card border-primary">
-            <div class="card-header">
+        <div class="formulario card border-primary">
+            <div class="card-header formulario-header">
                 <label class="p-2">Nuevo Participante</label>
                 <button onclick="location.href = '@Url.Action("Participante", "Participante")'; return false;" class="btn btn-success">Regresar</button>
             </div>
@@ -21,17 +23,41 @@
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">ID del país</label>
-                    <input type="text" required class="form-control mb-2" id="idPais" name="idPais" />
+                    <select type="text" required class="form-control mb-2 lista-opciones" id="idPais" name="idPais" >
+                        <option disabled selected>----Seleccionar una opcion----</option>
+                        @if(Model.Pais.Tables.Count > 0)
+                        {
+                            if(Model.Pais.Tables[0].Rows.Count > 0)
+                            {
+                                for(int x = 0; x < Model.Pais.Tables[0].Rows.Count; x++)
+                                {
+                                    <option>@Model.Pais.Tables[0].Rows[x]["idPais"].ToString() - @Model.Pais.Tables[0].Rows[x]["nombre"].ToString()</option>
+                                }
+                            }
+                        }
+                    </select>
                 </div>
 
                 <div class="form-group">
                     <label class="p-2">ID del Usuario</label>
-                    <input type="text" required class="form-control mb-2" id="idUsuario" name="idUsuario" />
+                    <select type="text" required class="form-control mb-2 lista-opciones" id="idUsuario" name="idUsuario">
+                        <option disabled selected>----Seleccionar una opcion----</option>
+                        @if (Model.Usuario.Tables.Count > 0)
+                        {
+                            if (Model.Usuario.Tables[0].Rows.Count > 0)
+                            {
+                                for (int x = 0; x < Model.Usuario.Tables[0].Rows.Count; x++)
+                                {
+                                    <option>@Model.Usuario.Tables[0].Rows[x]["idUsuario"].ToString() - @(Model.Usuario.Tables[0].Rows[x]["nombre"].ToString() + " ") @Model.Usuario.Tables[0].Rows[x]["apellido"].ToString()</option>
+                                }
+                            }
+                        }
+                    </select>
                 </div>
 
                 <div class="form-group">
                     <label class="p-2">Fecha de nacimiento</label>
-                    <input type="text" required class="form-control mb-2" id="fechaNacimiento" name="fechaNacimiento" />
+                    <input type="date" required class="form-control mb-2" id="fechaNacimiento" name="fechaNacimiento" />
                 </div>
 
                 <div class="form-group">
@@ -46,8 +72,8 @@
 
                 <div class="form-group">
                     <label class="p-2">Género</label>
-                    <select class="form-control mb-2" required id="genero" name="genero">
-                        <option disabled selected>-- Seleccionar opción --</option>
+                    <select class="form-control mb-2 lista-opciones" required id="genero" name="genero">
+                        <option disabled selected>----Seleccionar una opción----</option>
                         <option>F</option>
                         <option>M</option>
                         <option>Otro</option>
@@ -55,7 +81,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            <div class="contenedor-btn">
+                <button type="submit" class="btn btn-primary btn-guardar" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            </div>
 
         </div>
     </div>
