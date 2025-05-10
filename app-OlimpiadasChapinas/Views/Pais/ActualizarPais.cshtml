@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "ActualizarPais";
+    ViewBag.BodyClass = "vista";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,12 +10,12 @@
     <script src="~/JS/jsPais.js"></script>
 }
 
-<h2>Actualización de paises</h2>
+<h2 class="contenedor table-title">Actualización de paises</h2>
 
-<form action="/Pais/Actualizar" method="post">
+<form class="contenedor form-principal" action="/Pais/Actualizar" method="post">
     <div>
-        <div class="card border-primary">
-            <div class="card-header">
+        <div class="formulario card border-primary">
+            <div class="card-header formulario-header">
                 <label class="p-2">Actualizar Pais</label>
                 <button onclick="location.href = '@Url.Action("Pais", "Pais")'; return false;" class="btn btn-success">Regresar</button>
             </div>
@@ -22,7 +23,7 @@
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">ID del País (3 letras)</label>
-                    <input type="text" value="@Model.Tables[0].Rows[0]["idPais"]" required class="form-control mb-2" id="idPais" name="idPais" />
+                    <input type="text" readonly value="@Model.Tables[0].Rows[0]["idPais"]" required class="form-control mb-2 input-readonly" id="idPais" name="idPais" />
                 </div>
             </div>
 
@@ -33,7 +34,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            <div class="contenedor-btn">
+                <button type="submit" class="btn btn-primary btn-guardar" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            </div>
 
         </div>
     </div>
