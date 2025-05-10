@@ -1,16 +1,21 @@
 ﻿@model System.Data.DataSet
 @{
     ViewBag.Title = "Pago";
+    ViewBag.BodyClass = "vista";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Mantenimiento de Pagos</h2>
-<form method="post" action="@Url.Action("Pago", "Pago")">
-    <div class="card border-primary">
+@section scripts {
+    <script src="~/JS/jsPago.js"></script>
+}
+
+<h2 class="contenedor table-title">Mantenimiento de Pagos</h2>
+<form method="post" action="@Url.Action("Pago", "Pago")" class="contenedor">
+    <div class="card border-primary tabla-principal">
         <div class="card-header">
             <label class="p-2">Pagos</label>
-            <input type="text" id="idPago" name="idPago" placeholder="Escribe el ID del pago" />
-            <button type="submit" class="btn btn-default">Buscar</button>
+            <input type="text" id="idPago" name="idPago" placeholder="" />
+            <button type="submit" class="btn btn-light">Buscar</button>
             <button onclick="location.href = '@Url.Action("newPago", "Pago")'; return false" class="btn btn-success">Nuevo</button>
         </div>
 
@@ -28,7 +33,7 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="datos">
                 @if (Model.Tables.Count > 0)
                 {
                     if (Model.Tables[0].Rows.Count > 0)
@@ -42,8 +47,8 @@
                                 <td class="table-active">@Model.Tables[0].Rows[x]["fecha"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["hora"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["observaciones"]</td>
-                                <td><button type="button" class="btn btn-warning" onclick="location.href = '@Url.Action("ActualizarPago", "Pago", new { idPago = Model.Tables[0].Rows[x]["idPago"].ToString() })'; return false;">Actualizar</button></td>
-                                <td><button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("Eliminar", "Pago", new { idPago = Model.Tables[0].Rows[x]["idPago"].ToString() })'; return false;">Eliminar</button></td>
+                                <td><button type="button" class="btn btn-warning btn-button" onclick="location.href = '@Url.Action("ActualizarPago", "Pago", new { idPago = Model.Tables[0].Rows[x]["idPago"].ToString() })'; return false;">Actualizar</button></td>
+                                <td><button type="button" class="btn btn-danger btn-button" onclick="location.href = '@Url.Action("Eliminar", "Pago", new { idPago = Model.Tables[0].Rows[x]["idPago"].ToString() })'; return false;">Eliminar</button></td>
                             </tr>
                         }
                     }

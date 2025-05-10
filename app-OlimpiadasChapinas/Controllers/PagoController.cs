@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using static app_OlimpiadasChapinas.Models.csEstructuraPago;
+using app_OlimpiadasChapinas.Models;
 
 namespace app_OlimpiadasChapinas.Controllers
 {
@@ -55,7 +56,25 @@ namespace app_OlimpiadasChapinas.Controllers
 
         public ActionResult newPago()
         {
-            return View();
+            DataSet formaPagos = new DataSet();
+
+            string urlFormaPagos = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarFormaPago";
+
+            try
+            {
+                formaPagos = createDataSet(urlFormaPagos);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocurrió un error: {ex.Message}");
+            }
+
+            csDataSets model = new csDataSets
+            {
+                FormaPago = formaPagos
+            };
+
+            return View(model);
         }
 
         public ActionResult Guardar(FormCollection form)
@@ -64,7 +83,7 @@ namespace app_OlimpiadasChapinas.Controllers
             string resultJson = "";
             Byte[] reqByte, resByte;
             requestPago InsertarPago = new requestPago();
-            InsertarPago.idFormaPago = int.Parse(form["idFormaPago"]);
+            InsertarPago.idFormaPago = returnID(form["idFormaPago"]);
             InsertarPago.montoPago = double.Parse(form["montoPago"]);
             InsertarPago.observaciones = form["observaciones"].Trim();
 
@@ -92,34 +111,28 @@ namespace app_OlimpiadasChapinas.Controllers
         public ActionResult ActualizarPago(int idPago)
         {
             DataSet data = new DataSet();
-            var url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPagoPorID?idPago={idPago}";
+            DataSet formaPagos = new DataSet();
 
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-            request.ContentType = "application/json";
-            request.Accept = "application/json";
-            string responseBody = "";
+            var url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPagoPorID?idPago={idPago}";
+            string urlFormaPagos = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarFormaPago";
 
             try
             {
-                using (WebResponse response = request.GetResponse())
-                {
-                    using (Stream strReader = response.GetResponseStream())
-                    {
-                        using (StreamReader objReader = new StreamReader(strReader))
-                        {
-                            responseBody = objReader.ReadToEnd();
-                        }
-                    }
-                    data = JsonConvert.DeserializeObject<DataSet>(responseBody) ?? new DataSet();
-                }
+                data = createDataSet(url);
+                formaPagos = createDataSet(urlFormaPagos);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Ocurrió un error: {ex.Message}");
             }
 
-            return View(data);
+            csDataSets model = new csDataSets
+            {
+                Data = data,
+                FormaPago = formaPagos
+            };
+
+            return View(model);
         }
 
         public async Task<ActionResult> Actualizar(FormCollection form)
@@ -128,7 +141,7 @@ namespace app_OlimpiadasChapinas.Controllers
             string resultJson = "";
             requestPago ActualizarPago = new requestPago();
             ActualizarPago.idPago = int.Parse(form["idPago"]);
-            ActualizarPago.idFormaPago = int.Parse(form["idFormaPago"]);
+            ActualizarPago.idFormaPago = returnID(form["idFormaPago"]);
             ActualizarPago.montoPago = double.Parse(form["montoPago"]);
             ActualizarPago.observaciones = form["observaciones"].Trim();
 
@@ -183,6 +196,41 @@ namespace app_OlimpiadasChapinas.Controllers
             client.Dispose();
 
             return RedirectToAction("Pago", "Pago");
+        }
+
+        static DataSet createDataSet(string url)
+        {
+            DataSet data = new DataSet();
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+            request.Accept = "application/json";
+
+            using (WebResponse response = request.GetResponse())
+            {
+                using (Stream strReader = response.GetResponseStream())
+                {
+                    using (StreamReader objReader = new StreamReader(strReader))
+                    {
+                        string responseBody = objReader.ReadToEnd();
+                        data = JsonConvert.DeserializeObject<DataSet>(responseBody) ?? new DataSet();
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        static int returnID(string opcion)
+        {
+            int id = 0;
+            string[] datos = new string[2];
+
+            datos = opcion.Split('-');
+
+            id = int.Parse(datos[0]);
+
+            return id;
         }
     }
 }

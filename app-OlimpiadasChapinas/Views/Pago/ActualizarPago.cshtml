@@ -1,19 +1,23 @@
-﻿@model System.Data.DataSet
+﻿@model app_OlimpiadasChapinas.Models.csDataSets
+
 @{
     ViewBag.Title = "ActualizarPago";
+    ViewBag.BodyClass = "vista";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var formaPago = Model.Data.Tables[0].Rows[0]["idFormaPago"].ToString();
 }
 
 @section scripts {
     <script src="~/JS/jsPago.js"></script>
 }
 
-<h2>Actualización de Pagos</h2>
+<h2 class="contenedor table-title">Actualización de Pagos</h2>
 
-<form action="/Pago/Actualizar" method="post">
+<form class="contenedor form-principal" action="/Pago/Actualizar" method="post">
     <div>
-        <div class="card border-primary">
-            <div class="card-header">
+        <div class="formulario card border-primary">
+            <div class="card-header formulario-header">
                 <label class="p-2">Actualizar Pago</label>
                 <button onclick="location.href = '@Url.Action("Pago", "Pago")'; return false;" class="btn btn-success">Regresar</button>
             </div>
@@ -21,33 +25,46 @@
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">ID de Pago</label>
-                    <input type="text" value="@Model.Tables[0].Rows[0]["idPago"].ToString()" required class="form-control mb-2" id="idPago" name="idPago" />
+                    <input type="text" readonly value="@Model.Data.Tables[0].Rows[0]["idPago"].ToString()" required class="form-control mb-2 input-readonly" id="idPago" name="idPago" />
                 </div>
             </div>
 
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">ID Forma de Pago</label>
-                    <input type="text" value="@Model.Tables[0].Rows[0]["idFormaPago"].ToString()" required class="form-control mb-2" id="idFormaPago" name="idFormaPago" />
+                    <select required class="form-control mb-2 lista-opciones" id="idFormaPago" name="idFormaPago">
+                        <option disabled>----Seleccionar una opción----</option>
+                        @if (Model.FormaPago.Tables.Count > 0)
+                        {
+                            if (Model.FormaPago.Tables[0].Rows.Count > 0)
+                            {
+                                for (int x = 0; x < Model.FormaPago.Tables[0].Rows.Count; x++)
+                                {
+                                    <option @(formaPago == Model.FormaPago.Tables[0].Rows[x]["idFormaPago"].ToString() ? "selected" : " ")>@Model.FormaPago.Tables[0].Rows[x]["idFormaPago"].ToString() - @Model.FormaPago.Tables[0].Rows[x]["descripcion"].ToString()</option>
+                                }
+                            }
+                        }
+                    </select>
                 </div>
             </div>
 
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">Monto del pago</label>
-                    <input type="text" value="@Model.Tables[0].Rows[0]["montoPago"].ToString()" required class="form-control mb-2" id="montoPago" name="montoPago" />
+                    <input type="text" value="@Model.Data.Tables[0].Rows[0]["montoPago"].ToString()" required class="form-control mb-2" id="montoPago" name="montoPago" />
                 </div>
             </div>
 
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">Observaciones</label>
-                    <input type="text" value="@Model.Tables[0].Rows[0]["observaciones"].ToString()" required class="form-control mb-2" id="observaciones" name="observaciones" />
+                    <input type="text" value="@Model.Data.Tables[0].Rows[0]["observaciones"].ToString()" required class="form-control mb-2" id="observaciones" name="observaciones" />
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary" onclick="validarGuardadoDeCampos(event);">Guardar</button>
-
+            <div class="contenedor-btn">
+                <button type="submit" class="btn btn-primary btn-guardar" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+            </div>
         </div>
     </div>
 </form>
