@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "ActualizarUsuario";
+    ViewBag.BodyClass = "vista";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,12 +10,12 @@
     <script src="~/JS/jsUsuario.js"></script>
 }
 
-<h2>Actualización de Usuarios</h2>
+<h2 class="contenedor table-title">Actualización de Usuarios</h2>
 
-<form action="/Usuario/Actualizar" method="post">
+<form class="contenedor form-principal" action="/Usuario/Actualizar" method="post">
     <div>
-        <div class="card border-primary">
-            <div class="card-header">
+        <div class="formulario card border-primary">
+            <div class="card-header formulario-header">
                 <label class="p-2">Nuevo Usuario</label>
                 <button onclick="location.href = '@Url.Action("Usuario", "Usuario")'; return false;" class="btn btn-success">Regresar</button>
             </div>

@@ -274,7 +274,10 @@ img {
 
 .formulario div {
     margin-bottom: 1rem;
+}
 
+.formulario div input {
+    width: 100%;
 }
 
 .formulario-header{
