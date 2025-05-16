@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
 using Newtonsoft.Json;
 using static app_OlimpiadasChapinas.Models.csEstructuraDeporte;
 
@@ -18,6 +20,11 @@ namespace app_OlimpiadasChapinas.Controllers
     {
         public ActionResult Deporte(string idDeporte)
         {
+            if (Session["usuario"] == null)
+            {
+                return RedirectToAction("loginUsuario", "Usuario");
+            }
+
             DataSet data = new DataSet();
             var url = string.IsNullOrEmpty(idDeporte) ? $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarDeporte" : $"http://localhost/api-OlimpiadasChapinas/rest/api/listarDeportePorID?idDeporte={idDeporte}";
 
@@ -181,6 +188,106 @@ namespace app_OlimpiadasChapinas.Controllers
             client.Dispose();
 
             return RedirectToAction("Deporte", "Deporte");
+        }
+
+        public DataSet ObtenerDeportes()
+        {
+            DataSet data = new DataSet();
+            var url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarDeporte";
+
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+            request.Accept = "application/json";
+            string responseBody = "";
+
+            try
+            {
+                using (WebResponse response = request.GetResponse())
+                {
+                    using (Stream strReader = response.GetResponseStream())
+                    {
+                        using (StreamReader objReader = new StreamReader(strReader))
+                        {
+                            responseBody = objReader.ReadToEnd();
+                        }
+                    }
+                    data = JsonConvert.DeserializeObject<DataSet>(responseBody) ?? new DataSet();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocurrió un error: {ex.Message}");
+            }
+
+            return data;
+        }
+
+        public ActionResult ExportarDeportesPDF()
+        {
+            // Obtener los datos del DataSet
+            DataSet ds = ObtenerDeportes();
+            if (ds == null || ds.Tables.Count == 0)
+            {
+                return new HttpStatusCodeResult(500, "No se encontraron datos.");
+            }
+
+            DataTable tabla = ds.Tables[0];
+
+            // Crear documento PDF
+            using (MemoryStream stream = new MemoryStream())
+            {
+                Document pdfDoc = new Document(PageSize.A4.Rotate(), 25, 25, 30, 30);
+                PdfWriter.GetInstance(pdfDoc, stream);
+                pdfDoc.Open();
+
+                // Título
+                Font tituloFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
+                Paragraph titulo = new Paragraph("Reporte de Deportes", tituloFont)
+                {
+                    Alignment = Element.ALIGN_CENTER,
+                    SpacingAfter = 15f
+                };
+                pdfDoc.Add(titulo);
+
+                // Estilos de celda
+                Font encabezadoFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE);
+                Font contenidoFont = FontFactory.GetFont(FontFactory.HELVETICA, 10);
+
+                PdfPTable pdfTable = new PdfPTable(tabla.Columns.Count);
+                pdfTable.WidthPercentage = 100;
+
+                // Agregar encabezados
+                foreach (DataColumn columna in tabla.Columns)
+                {
+                    PdfPCell cell = new PdfPCell(new Phrase(columna.ColumnName, encabezadoFont))
+                    {
+                        BackgroundColor = BaseColor.GRAY,
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        Padding = 5
+                    };
+                    pdfTable.AddCell(cell);
+                }
+
+                // Agregar filas
+                foreach (DataRow fila in tabla.Rows)
+                {
+                    foreach (var item in fila.ItemArray)
+                    {
+                        PdfPCell cell = new PdfPCell(new Phrase(item.ToString(), contenidoFont))
+                        {
+                            HorizontalAlignment = Element.ALIGN_CENTER,
+                            Padding = 5
+                        };
+                        pdfTable.AddCell(cell);
+                    }
+                }
+
+                pdfDoc.Add(pdfTable);
+                pdfDoc.Close();
+
+                return File(stream.ToArray(), "application/pdf", "Deporte.pdf");
+            }
         }
     }
 }

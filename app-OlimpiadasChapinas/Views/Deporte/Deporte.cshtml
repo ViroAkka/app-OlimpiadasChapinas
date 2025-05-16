@@ -18,6 +18,7 @@
             <input type="text" id="idDeporte" name="idDeporte" placeholder="" />
             <button type="submit" class="btn btn-light">Buscar</button>
             <button onclick="location.href = '@Url.Action("newDeporte", "Deporte")'; return false" class="btn btn-success">Nuevo</button>
+            <button onclick="location.href = '@Url.Action("ExportarDeportesPDF", "Deporte")'; return false" class="btn btn-primary">Crear Reporte</button>
         </div>
 
         <table class="table-responsive" border="1" style="color: black">
