@@ -13,6 +13,7 @@ using iTextSharp.text.pdf;
 using iTextSharp.text;
 using Newtonsoft.Json;
 using static app_OlimpiadasChapinas.Models.csEstructuraDeporte;
+using ClosedXML.Excel;
 
 namespace app_OlimpiadasChapinas.Controllers
 {
@@ -288,6 +289,59 @@ namespace app_OlimpiadasChapinas.Controllers
 
                 return File(stream.ToArray(), "application/pdf", "Deporte.pdf");
             }
+        }
+
+        public ActionResult ExportarDeportesExcel()
+        {
+            DataSet ds = ObtenerDeportes();
+            if (ds == null || ds.Tables.Count == 0)
+            {
+                return new HttpStatusCodeResult(500, "No se encontraron datos.");
+            }
+
+            DataTable tabla = ds.Tables[0];
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                var ws = wb.Worksheets.Add("Deportes");
+
+                // Cargar los datos
+                ws.Cell(1, 1).InsertTable(tabla);
+
+                // Estilo de título
+                ws.Range("A1:" + GetExcelColumnName(tabla.Columns.Count) + "1")
+                  .Style.Font.Bold = true;
+
+                // Autoajustar anchos de columnas
+                ws.Columns().AdjustToContents();
+
+                // Centrar el contenido de todas las celdas
+                ws.RangeUsed().Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.RangeUsed().Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    stream.Position = 0;
+                    return File(stream.ToArray(),
+                                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                "Deportes.xlsx");
+                }
+            }
+        }
+
+        private string GetExcelColumnName(int columnNumber)
+        {
+            string columnName = "";
+
+            while (columnNumber > 0)
+            {
+                int modulo = (columnNumber - 1) % 26;
+                columnName = Convert.ToChar(65 + modulo) + columnName;
+                columnNumber = (columnNumber - modulo) / 26;
+            }
+
+            return columnName;
         }
     }
 }

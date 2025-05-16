@@ -13,12 +13,17 @@
 <h2 class="contenedor table-title">Mantenimiento de Deportes</h2>
 <form method="post" action="@Url.Action("Deporte", "Deporte")" class="contenedor">
     <div class="card border-primary tabla-principal">
-        <div class="card-header">
-            <label class="p-2">Deporte</label>
-            <input type="text" id="idDeporte" name="idDeporte" placeholder="" />
-            <button type="submit" class="btn btn-light">Buscar</button>
-            <button onclick="location.href = '@Url.Action("newDeporte", "Deporte")'; return false" class="btn btn-success">Nuevo</button>
-            <button onclick="location.href = '@Url.Action("ExportarDeportesPDF", "Deporte")'; return false" class="btn btn-primary">Crear Reporte</button>
+        <div class="card-header d-flex justify-content-between">
+            <div>
+                <label class="p-2">Deporte</label>
+                <input type="text" id="idDeporte" name="idDeporte" placeholder="" />
+                <button type="submit" class="btn btn-light">Buscar</button>
+                <button onclick="location.href = '@Url.Action("newDeporte", "Deporte")'; return false" class="btn btn-success">Nuevo</button>
+            </div>
+            <div>
+                <button onclick="location.href = '@Url.Action("ExportarDeportesPDF", "Deporte")'; return false" class="btn btn-primary">Crear Reporte PDF</button>
+                <button onclick="location.href = '@Url.Action("ExportarDeportesExcel", "Deporte")'; return false" class="btn btn-primary">Crear Reporte Excel</button>
+            </div>
         </div>
 
         <table class="table-responsive" border="1" style="color: black">
