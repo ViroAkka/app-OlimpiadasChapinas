@@ -240,6 +240,7 @@
     <Content Include="Views\Usuario\Usuario.cshtml" />
     <Content Include="Views\Usuario\newUsuario.cshtml" />
     <Content Include="Views\Usuario\ActualizarUsuario.cshtml" />
+    <Content Include="Views\Usuario\loginUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -20,8 +20,13 @@ namespace app_OlimpiadasChapinas.Controllers
         // GET: Usuario
         public ActionResult Usuario(string idUsuario, string email)
         {
+            if (Session["usuario"] == null)
+            {
+                return RedirectToAction("loginUsuario", "Usuario");
+            }
+
             DataSet data = new DataSet();
-            var url = ""; 
+            var url = "";
             if (string.IsNullOrEmpty(idUsuario) && string.IsNullOrEmpty(email))
             {
                 url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarUsuario";
@@ -33,7 +38,8 @@ namespace app_OlimpiadasChapinas.Controllers
             else if (string.IsNullOrEmpty(idUsuario))
             {
                 url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarUsuarioPorEmail?email={email}";
-            } else
+            }
+            else
             {
                 url = $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarUsuario";
             }
@@ -201,6 +207,47 @@ namespace app_OlimpiadasChapinas.Controllers
             client.Dispose();
 
             return RedirectToAction("Usuario", "Usuario");
+        }
+
+        public ActionResult loginUsuario()
+        {
+            return View();
+        }
+
+        public async Task<ActionResult> Login(FormCollection form)
+        {
+            string json = "";
+            string resultJson = "";
+            requestUsuario LogearUsuario = new requestUsuario();
+            LogearUsuario.email = form["email"];
+            LogearUsuario.contraseña_hash = form["contraseña_hash"];
+
+            json = JsonConvert.SerializeObject(LogearUsuario);
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost/api-OlimpiadasChapinas/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var jsonContent = new StringContent(JsonConvert.SerializeObject(LogearUsuario), Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.PostAsync("rest/api/LoginUsuario", jsonContent);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    resultJson = await response.Content.ReadAsStringAsync();
+                    requestUsuario result = JsonConvert.DeserializeObject<requestUsuario>(resultJson);
+                    if (result.email != "")
+                    {
+                        Session["usuario"] = result;
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+
+                ViewBag.Error = "Credenciales incorrectas.";
+                return RedirectToAction("loginUsuario", "Usuario"); ;
+            }
         }
     }
 }

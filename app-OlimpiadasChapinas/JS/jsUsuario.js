@@ -68,6 +68,25 @@ function validarGuardadoDeCamposActualizacion(event) {
     }
 }
 
+function validarCamposLogin(event) {
+    event.preventDefault();
+
+    let respuesta = "";
+    if ($("#email").val().trim() == "") {
+        respuesta += "\n{Email}";
+    }
+
+    if ($("#contraseña_hash").val().trim() == "") {
+        respuesta += "\n{Contraseña del usuario}";
+    }
+
+    if (respuesta !== "") {
+        alert(`Los siguientes campos no pueden quedar vacíos: ${respuesta}`);
+    } else {
+        $("form").submit(); // Envía el formulario si no hay errores
+    }
+}
+
 const inputUsuario = document.getElementById("idUsuario");
 const inputEmail = document.getElementById("email");
 

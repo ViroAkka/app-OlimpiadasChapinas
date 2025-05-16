@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "loginUsuario";
+    ViewBag.BodyClass = "vista";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    <script src="~/JS/jsUsuario.js"></script>
+}
+
+<h2 class="contenedor table-title">Inicio de sesión</h2>
+
+<form class="contenedor form-principal" action="/Usuario/Login" method="post">
+    <div>
+        <div class="formulario card border-primary">
+            <div class="card-header formulario-header">
+                <label class="p-2" style="text-align: center">Ingresa tu usuario</label>
+            </div>
+
+            <div class="col" align="center">
+               <div class="form-group">
+                    <label class="p-2">Email</label>
+                    <input type="email" required class="form-control mb-2" id="email" name="email" />
+                </div>
+
+                <div class="form-group">
+                    <label class="p-2">Contraseña</label>
+                    <input type="password" required class="form-control mb-2" id="contraseña_hash" name="contraseña_hash" />
+                </div>
+
+                <div class="contenedor-btn">
+                    <button type="submit" class="btn btn-primary btn-guardar">Iniciar sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+
