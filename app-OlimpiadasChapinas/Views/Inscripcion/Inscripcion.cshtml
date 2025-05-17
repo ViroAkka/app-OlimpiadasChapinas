@@ -13,13 +13,19 @@
 <h2 class="contenedor table-title">Mantenimiento de Inscripciones</h2>
 <form method="post" action="@Url.Action("Inscripcion", "Inscripcion")" class="contenedor">
     <div class="card border-primary tabla-principal">
-        <div class="card-header">
-            <label class="p-2">Inscripciones</label>
-            <input type="text" id="idEvento" name="idEvento" placeholder="" />
-            <input type="text" id="idParticipante" name="idParticipante" placeholder="" />
-            <input type="text" id="idPago" name="idPago" placeholder="" />
-            <button type="submit" class="btn btn-light">Buscar</button>
-            <button onclick="location.href = '@Url.Action("newInscripcion", "Inscripcion")'; return false" class="btn btn-success">Nuevo</button>
+        <div class="card-header d-flex justify-content-between">
+            <div>
+                <label class="p-2">Inscripciones</label>
+                <input type="text" id="idEvento" name="idEvento" placeholder="" />
+                <input type="text" id="idParticipante" name="idParticipante" placeholder="" />
+                <input type="text" id="idPago" name="idPago" placeholder="" />
+                <button type="submit" class="btn btn-light">Buscar</button>
+                <button onclick="location.href = '@Url.Action("newInscripcion", "Inscripcion")'; return false" class="btn btn-success">Nuevo</button>
+            </div>
+            <div class="d-flex flex-column gap-2">
+                <button onclick="location.href = '@Url.Action("ExportarPDF", "Reportes", new {nombreDataSet = "Inscripcion"} )'; return false" class="btn btn-primary">Crear Reporte PDF</button>
+                <button onclick="location.href = '@Url.Action("ExportarExcel", "Reportes", new {nombreDataSet = "Inscripcion"} )'; return false" class="btn btn-primary">Crear Reporte Excel</button>
+            </div>
         </div>
 
         <table class="table-responsive" border="1" style="color: black">

@@ -13,11 +13,17 @@
 <h2 class="contenedor table-title">Mantenimiento de Participantes</h2>
 <form method="post" action="@Url.Action("Participante", "Participante")" class="contenedor">
     <div class="card border-primary tabla-principal">
-        <div class="card-header">
-            <label class="p-2">Participante</label>
-            <input type="text" id="idParticipante" name="idParticipante" placeholder="" />
-            <button type="submit" class="btn btn-light">Buscar</button>
-            <button onclick="location.href = '@Url.Action("newParticipante", "Participante")'; return false" class="btn btn-success">Nuevo</button>
+        <div class="card-header d-flex justify-content-between">
+            <div>
+                <label class="p-2">Participante</label>
+                <input type="text" id="idParticipante" name="idParticipante" placeholder="" />
+                <button type="submit" class="btn btn-light">Buscar</button>
+                <button onclick="location.href = '@Url.Action("newParticipante", "Participante")'; return false" class="btn btn-success">Nuevo</button>
+            </div>
+            <div>
+                <button onclick="location.href = '@Url.Action("ExportarPDF", "Reportes", new {nombreDataSet = "Participante"} )'; return false" class="btn btn-primary">Crear Reporte PDF</button>
+                <button onclick="location.href = '@Url.Action("ExportarExcel", "Reportes", new {nombreDataSet = "Participante"} )'; return false" class="btn btn-primary">Crear Reporte Excel</button>
+            </div>
         </div>
 
         <table class="table-responsive" border="1" style="color: black">
