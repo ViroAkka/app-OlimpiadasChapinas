@@ -244,7 +244,7 @@ namespace app_OlimpiadasChapinas.Controllers
 
                 // Título
                 Font tituloFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
-                Paragraph titulo = new Paragraph("Reporte de Deportes", tituloFont)
+                Paragraph titulo = new Paragraph("Reporte de Deporte", tituloFont)
                 {
                     Alignment = Element.ALIGN_CENTER,
                     SpacingAfter = 15f
