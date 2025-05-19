@@ -213,6 +213,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="JS\spotlight.js" />
     <Content Include="JS\jsPuestoPremiacion.js" />
     <Content Include="JS\jsFormaPago.js" />
     <Content Include="JS\jsDeporte.js" />
