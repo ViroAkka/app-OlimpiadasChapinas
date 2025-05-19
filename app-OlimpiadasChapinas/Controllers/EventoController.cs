@@ -21,6 +21,11 @@ namespace app_OlimpiadasChapinas.Controllers
         // GET: Evento
         public ActionResult Evento(string idEvento)
         {
+            if (Session["usuario"] == null)
+            {
+                return RedirectToAction("loginUsuario", "Usuario");
+            }
+
             DataSet data = new DataSet();
             var url = string.IsNullOrEmpty(idEvento) 
                 ? $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarEvento" 

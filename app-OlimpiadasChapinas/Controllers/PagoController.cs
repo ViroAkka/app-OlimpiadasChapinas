@@ -21,6 +21,11 @@ namespace app_OlimpiadasChapinas.Controllers
         // GET: Pago
         public ActionResult Pago(string idPago)
         {
+            if (Session["usuario"] == null)
+            {
+                return RedirectToAction("loginUsuario", "Usuario");
+            }
+
             DataSet data = new DataSet();
             var url = string.IsNullOrEmpty(idPago)
                 ? $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPago"

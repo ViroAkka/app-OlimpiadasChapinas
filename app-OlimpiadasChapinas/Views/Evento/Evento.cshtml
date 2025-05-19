@@ -8,6 +8,7 @@
 
 @section scripts {
     <script src="~/JS/jsEvento.js"></script>
+    <script src="~/JS/modal.js"></script>
 }
 
 <h2 class="contenedor table-title">Mantenimiento de Eventos</h2>
@@ -60,7 +61,7 @@
                                 <td class="table-active">@Model.Tables[0].Rows[x]["cantidadParticipantes"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["montoInscripcion"]</td>
                                 <td><button type="button" class="btn btn-warning btn-button" onclick="location.href = '@Url.Action("ActualizarEvento", "Evento", new { idEvento = Model.Tables[0].Rows[x]["idEvento"].ToString() })'; return false;">Actualizar</button></td>
-                                <td><button type="button" class="btn btn-danger btn-button" onclick="location.href = '@Url.Action("Eliminar", "Evento", new { idEvento = Model.Tables[0].Rows[x]["idEvento"].ToString() })'; return false;">Eliminar</button></td>
+                                <td><button type="button" class="btn btn-danger btn-button" onclick="mostrarModalEliminar('@Url.Action("Eliminar", "Evento", new { idEvento = Model.Tables[0].Rows[x]["idEvento"].ToString() })');">Eliminar</button></td>
                             </tr>
                         }
                     }

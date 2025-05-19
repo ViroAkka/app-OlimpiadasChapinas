@@ -8,6 +8,7 @@
 
 @section scripts {
     <script src="~/JS/jsPuestoPremiacion.js"></script>
+    <script src="~/JS/modal.js"></script>
 }
 
 <h2 class="contenedor table-title">Mantenimiento de Puestos de Premiación</h2>
@@ -47,7 +48,7 @@
                                 <td class="table-active">@Model.Tables[0].Rows[x]["idPuesto"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["descripcion"]</td>
                                 <td><button type="button" class="btn btn-warning btn-button" onclick="location.href = '@Url.Action("ActualizarPuestoPremiacion", "PuestoPremiacion", new { idPuesto = Model.Tables[0].Rows[x]["idPuesto"].ToString() })'; return false;">Actualizar</button></td>
-                                <td><button type="button" class="btn btn-danger btn-button" onclick="location.href = '@Url.Action("Eliminar", "PuestoPremiacion", new { idPuesto = Model.Tables[0].Rows[x]["idPuesto"].ToString() })'; return false;">Eliminar</button></td>
+                                <td><button type="button" class="btn btn-danger btn-button" onclick="mostrarModalEliminar('@Url.Action("Eliminar", "PuestoPremiacion", new { idPuesto = Model.Tables[0].Rows[x]["idPuesto"].ToString() })');">Eliminar</button></td>
                             </tr>
                         }
                     }

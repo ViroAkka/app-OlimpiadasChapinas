@@ -20,6 +20,11 @@ namespace app_OlimpiadasChapinas.Controllers
         // GET: PuestoPremiacion
         public ActionResult PuestoPremiacion(string idPuesto)
         {
+            if (Session["usuario"] == null)
+            {
+                return RedirectToAction("loginUsuario", "Usuario");
+            }
+
             DataSet data = new DataSet();
             var url = string.IsNullOrEmpty(idPuesto)
                 ? $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPuestoPremiacion"

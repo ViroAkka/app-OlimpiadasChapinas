@@ -20,6 +20,11 @@ namespace app_OlimpiadasChapinas.Controllers
         // GET: Pais
         public ActionResult Pais(string idPais)
         {
+            if (Session["usuario"] == null)
+            {
+                return RedirectToAction("loginUsuario", "Usuario");
+            }
+
             DataSet data = new DataSet();
             var url = string.IsNullOrEmpty(idPais)
                 ? $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarPais"

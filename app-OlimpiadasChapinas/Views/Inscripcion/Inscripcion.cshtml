@@ -8,6 +8,7 @@
 
 @section scripts {
     <script src="~/JS/jsInscripcion.js"></script>
+    <script src="~/JS/modal.js"></script>
 }
 
 <h2 class="contenedor table-title">Mantenimiento de Inscripciones</h2>
@@ -53,7 +54,7 @@
                                 <td class="table-active">@Model.Tables[0].Rows[x]["idPago"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["fuentePublicidad"]</td>
                                 <td><button type="button" class="btn btn-warning btn-button" onclick="location.href = '@Url.Action("ActualizarInscripcion", "Inscripcion", new { idEvento = Model.Tables[0].Rows[x]["idEvento"].ToString(), idParticipante = Model.Tables[0].Rows[x]["idParticipante"].ToString(), idPago = Model.Tables[0].Rows[x]["idPago"].ToString() })'; return false;">Actualizar</button></td>
-                                <td><button type="button" class="btn btn-danger btn-button" onclick="location.href = '@Url.Action("Eliminar", "Inscripcion", new { idEvento = Model.Tables[0].Rows[x]["idEvento"].ToString(), idParticipante = Model.Tables[0].Rows[x]["idParticipante"].ToString(), idPago = Model.Tables[0].Rows[x]["idPago"].ToString() })'; return false;">Eliminar</button></td>
+                                <td><button type="button" class="btn btn-danger btn-button" onclick="mostrarModalEliminar('@Url.Action("Eliminar", "Inscripcion", new { idEvento = Model.Tables[0].Rows[x]["idEvento"].ToString(), idParticipante = Model.Tables[0].Rows[x]["idParticipante"].ToString(), idPago = Model.Tables[0].Rows[x]["idPago"].ToString() })');">Eliminar</button></td>
                             </tr>
                         }
                     }

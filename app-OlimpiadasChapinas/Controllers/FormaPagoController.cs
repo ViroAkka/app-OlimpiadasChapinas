@@ -20,6 +20,11 @@ namespace app_OlimpiadasChapinas.Controllers
         // GET: FormaPago
         public ActionResult FormaPago(string idFormaPago)
         {
+            if (Session["usuario"] == null)
+            {
+                return RedirectToAction("loginUsuario", "Usuario");
+            }
+
             DataSet data = new DataSet();
             var url = string.IsNullOrEmpty(idFormaPago)
                 ? $"http://localhost/api-OlimpiadasChapinas/rest/api/ListarFormaPago"

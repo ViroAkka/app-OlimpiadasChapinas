@@ -7,6 +7,7 @@
 
 @section scripts {
     <script src="~/JS/jsPago.js"></script>
+    <script src="~/JS/modal.js"></script>
 }
 
 <h2 class="contenedor table-title">Mantenimiento de Pagos</h2>
@@ -54,7 +55,7 @@
                                 <td class="table-active">@Model.Tables[0].Rows[x]["hora"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["observaciones"]</td>
                                 <td><button type="button" class="btn btn-warning btn-button" onclick="location.href = '@Url.Action("ActualizarPago", "Pago", new { idPago = Model.Tables[0].Rows[x]["idPago"].ToString() })'; return false;">Actualizar</button></td>
-                                <td><button type="button" class="btn btn-danger btn-button" onclick="location.href = '@Url.Action("Eliminar", "Pago", new { idPago = Model.Tables[0].Rows[x]["idPago"].ToString() })'; return false;">Eliminar</button></td>
+                                <td><button type="button" class="btn btn-danger btn-button" onclick="mostrarModalEliminar('@Url.Action("Eliminar", "Pago", new { idPago = Model.Tables[0].Rows[x]["idPago"].ToString() })');">Eliminar</button></td>
                             </tr>
                         }
                     }

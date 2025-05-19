@@ -8,6 +8,7 @@
 
 @section scripts {
     <script src="~/JS/jsParticipante.js"></script>
+    <script src="~/JS/modal.js"></script>
 }
 
 <h2 class="contenedor table-title">Mantenimiento de Participantes</h2>
@@ -57,7 +58,7 @@
                                 <td class="table-active">@Model.Tables[0].Rows[x]["peso"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["genero"]</td>
                                 <td><button type="button" class="btn btn-warning btn-button" onclick="location.href = '@Url.Action("ActualizarParticipante", "Participante", new { idParticipante = Model.Tables[0].Rows[x]["idParticipante"].ToString() })'; return false;">Actualizar</button></td>
-                                <td><button type="button" class="btn btn-danger btn-button" onclick="location.href = '@Url.Action("Eliminar", "Participante", new { idParticipante = Model.Tables[0].Rows[x]["idParticipante"].ToString() })'; return false;">Eliminar</button></td>
+                                <td><button type="button" class="btn btn-danger btn-button" onclick="mostrarModalEliminar('@Url.Action("Eliminar", "Participante", new { idParticipante = Model.Tables[0].Rows[x]["idParticipante"].ToString() })');">Eliminar</button></td>
                             </tr>
                         }
                     }

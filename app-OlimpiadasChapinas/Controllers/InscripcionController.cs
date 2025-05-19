@@ -21,6 +21,11 @@ namespace app_OlimpiadasChapinas.Controllers
         // GET: Inscripcion
         public ActionResult Inscripcion(string idEvento, string idParticipante, string idPago)
         {
+            if (Session["usuario"] == null)
+            {
+                return RedirectToAction("loginUsuario", "Usuario");
+            }
+
             DataSet data = new DataSet();
             var url = "";
 
