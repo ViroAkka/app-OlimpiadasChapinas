@@ -338,4 +338,24 @@ img {
     transition: left 0.05s ease-out, top 0.05s ease-out;
 }
 
+.contenedor-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar-logo {
+    margin-right: 2rem;
+}
+
+.navbar-nav {
+    gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cerrar-sesion {
+    margin-left: 2rem;
+}
 

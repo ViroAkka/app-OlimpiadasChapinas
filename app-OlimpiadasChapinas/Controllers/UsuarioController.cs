@@ -240,7 +240,7 @@ namespace app_OlimpiadasChapinas.Controllers
                     requestUsuario result = JsonConvert.DeserializeObject<requestUsuario>(resultJson);
                     if (result.email != "")
                     {
-                        Session["usuario"] = result;
+                        Session["usuario"] = result.email;
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -248,6 +248,12 @@ namespace app_OlimpiadasChapinas.Controllers
                 ViewBag.Error = "Credenciales incorrectas.";
                 return RedirectToAction("loginUsuario", "Usuario"); ;
             }
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Login");
         }
     }
 }
