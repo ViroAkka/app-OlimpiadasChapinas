@@ -53,9 +53,9 @@
                                 <td class="table-active">@Model.Tables[0].Rows[x]["idParticipante"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["idPais"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["idUsuario"]</td>
-                                <td class="table-active">@Model.Tables[0].Rows[x]["fechaNacimiento"]</td>
-                                <td class="table-active">@Model.Tables[0].Rows[x]["altura"]</td>
-                                <td class="table-active">@Model.Tables[0].Rows[x]["peso"]</td>
+                                <td class="table-active">@Model.Tables[0].Rows[x]["fechaNacimiento"].ToString().Substring(0, 10)</td>
+                                <td class="table-active">@Convert.ToDouble(Model.Tables[0].Rows[x]["altura"]).ToString("F2") m</td>
+                                <td class="table-active">@Model.Tables[0].Rows[x]["peso"] lb</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["genero"]</td>
                                 <td><button type="button" class="btn btn-warning btn-button" onclick="location.href = '@Url.Action("ActualizarParticipante", "Participante", new { idParticipante = Model.Tables[0].Rows[x]["idParticipante"].ToString() })'; return false;">Actualizar</button></td>
                                 <td><button type="button" class="btn btn-danger btn-button" onclick="mostrarModalEliminar('@Url.Action("Eliminar", "Participante", new { idParticipante = Model.Tables[0].Rows[x]["idParticipante"].ToString() })');">Eliminar</button></td>

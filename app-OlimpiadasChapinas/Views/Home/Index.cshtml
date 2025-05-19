@@ -52,7 +52,7 @@
                     {
                         for (int x = 0; x < Model.Tables[0].Rows.Count; x++)
                         {
-                            <li onclick="location.href = '@Url.Action("newInscripcion", "Inscripcion")'">@Model.Tables[0].Rows[x]["fechaInicio"] | <span>@Model.Tables[0].Rows[x]["nombre"]</span></li>
+                            <li onclick="location.href = '@Url.Action("newInscripcion", "Inscripcion")'">@Model.Tables[0].Rows[x]["fechaInicio"].ToString().Substring(0,10) | <span>@Model.Tables[0].Rows[x]["nombre"]</span></li>
                         }
                     }
                 }

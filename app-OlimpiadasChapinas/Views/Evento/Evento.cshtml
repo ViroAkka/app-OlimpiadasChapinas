@@ -56,8 +56,8 @@
                                 <td class="table-active">@Model.Tables[0].Rows[x]["idDeporte"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["idEventoPadre"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["nombre"]</td>
-                                <td class="table-active">@Model.Tables[0].Rows[x]["fechaInicio"]</td>
-                                <td class="table-active">@Model.Tables[0].Rows[x]["fechaFin"]</td>
+                                <td class="table-active">@Model.Tables[0].Rows[x]["fechaInicio"].ToString().Substring(0, 10)</td>
+                                <td class="table-active">@Model.Tables[0].Rows[x]["fechaFin"].ToString().Substring(0, 10)</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["cantidadParticipantes"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["montoInscripcion"]</td>
                                 <td><button type="button" class="btn btn-warning btn-button" onclick="location.href = '@Url.Action("ActualizarEvento", "Evento", new { idEvento = Model.Tables[0].Rows[x]["idEvento"].ToString() })'; return false;">Actualizar</button></td>
