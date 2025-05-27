@@ -14,41 +14,40 @@
     <script src="~/JS/jsInscripcion.js"></script>
 }
 
-<h2 class="contenedor table-title">Actualización de Inscripciones</h2>
+<h2 class="table-title">Actualización de Inscripciones</h2>
 
-<form class="contenedor form-principal" action="/Inscripcion/Actualizar" method="post">
+<form class="form-principal" action="/Inscripcion/Actualizar" method="post">
     <div class="formulario card border-primary">
         <div class="card-header formulario-header">
             <label class="p-2">Actualizar Inscripcion</label>
             <button onclick="location.href = '@Url.Action("Inscripcion", "Inscripcion")'; return false;" class="btn btn-success">Regresar</button>
         </div>
-        <div class="row">
             <div class="col">
-                <div class="col" align="center">
-                    <h2 class="seccion-form-title" align="center">Datos del Evento a actualizar</h2>
-                    <div class="form-group">
-                        <label class="p-2">ID del Evento</label>
-                        <input type="text" readonly value="@Model.Data.Tables[0].Rows[0]["idEvento"]" required class="form-control mb-2 input-readonly" id="idEvento" name="idEvento" />
-                    </div>
-                </div>
-
-                <div class="col" align="center">
-                    <div class="form-group">
-                        <label class="p-2">ID del Participante</label>
-                        <input type="text" readonly value="@Model.Data.Tables[0].Rows[0]["idParticipante"]" required class="form-control mb-2 input-readonly" id="idParticipante" name="idParticipante" />
-                    </div>
-                </div>
-
-                <div class="col" align="center">
-                    <div class="form-group">
-                        <label class="p-2">ID del Pago</label>
-                        <input type="text" readonly value="@Model.Data.Tables[0].Rows[0]["idPago"]" required class="form-control mb-2 input-readonly" id="idPago" name="idPago" />
-                    </div>
-                </div>
+                
             </div>
 
             <div class="col mt-10">
-                <h2 class="seccion-form-title" align="center">Datos actualizados</h2>
+                <div class="col" align="center">
+                    <div class="form-group">
+                        @*<label class="p-2">ID del Evento</label>*@
+                        <input type="text" hidden value="@Model.Data.Tables[0].Rows[0]["idEvento"]" required class="form-control mb-2 input-readonly" id="idEvento" name="idEvento" />
+                    </div>
+                </div>
+
+                <div class="col" align="center">
+                    <div class="form-group">
+                        @*<label class="p-2">ID del Participante</label>*@
+                        <input type="text" hidden value="@Model.Data.Tables[0].Rows[0]["idParticipante"]" required class="form-control mb-2 input-readonly" id="idParticipante" name="idParticipante" />
+                    </div>
+                </div>
+
+                <div class="col" align="center">
+                    <div class="form-group">
+                        @*<label class="p-2">ID del Pago</label>*@
+                        <input type="text" hidden value="@Model.Data.Tables[0].Rows[0]["idPago"]" required class="form-control mb-2 input-readonly" id="idPago" name="idPago" />
+                    </div>
+                </div>
+
                 <div class="col" align="center">
                     <div class="form-group">
                         <label class="p-2">ID del Evento</label>
@@ -83,18 +82,18 @@
                                     for (int x = 0; x < Model.Participante.Tables[0].Rows.Count; x++)
                                     {
                                         <option @(participante == Model.Participante.Tables[0].Rows[x]["idParticipante"].ToString() ? "selected" : "")>
-                                        @Model.Participante.Tables[0].Rows[x]["idParticipante"].ToString() -
-                                        @for (int y = 0; y < Model.Usuario.Tables[0].Rows.Count; y++)
-                                        {
-                                            if (Model.Participante.Tables[0].Rows[x]["idUsuario"].ToString() == Model.Usuario.Tables[0].Rows[y]["idUsuario"].ToString())
+                                            @Model.Participante.Tables[0].Rows[x]["idParticipante"].ToString() -
+                                            @for (int y = 0; y < Model.Usuario.Tables[0].Rows.Count; y++)
                                             {
-                                                @(Model.Usuario.Tables[0].Rows[x]["nombre"].ToString() + " ") @(Model.Usuario.Tables[0].Rows[x]["apellido"].ToString())
+                                                if (Model.Participante.Tables[0].Rows[x]["idUsuario"].ToString() == Model.Usuario.Tables[0].Rows[y]["idUsuario"].ToString())
+                                                {
+                                                    @(Model.Usuario.Tables[0].Rows[x]["nombre"].ToString() + " ") @(Model.Usuario.Tables[0].Rows[x]["apellido"].ToString())
+                                                }
                                             }
-                                        }
-                                    </option>
+                                        </option>
                                     }
                                 }
-                             }
+                            }
                         </select>
                     </div>
                 </div>
@@ -128,7 +127,6 @@
             <div align="center">
                 <button type="submit" class="btn btn-primary btn-button" onclick="validarGuardadoDeCampos(event);">Guardar</button>
             </div>
-        </div>
     </div>
 </form>
 

@@ -12,7 +12,7 @@
 
 <h2 class="table-title">Registro de Nuevas Formas de Pago</h2>
 
-<form class="contenedor form-principal" action="/FormaPago/Actualizar" method="post">
+<form class="form-principal" action="/FormaPago/Actualizar" method="post">
     <div>
         <div class="formulario card border-primary">
             <div class="card-header formulario-header">
@@ -22,8 +22,8 @@
 
             <div class="col" align="center">
                 <div class="form-group">
-                    <label class="p-2">ID Forma de Pago</label>
-                    <input type="number" readonly value="@Model.Tables[0].Rows[0]["idFormaPago"].ToString()" required class="form-control mb-2 input-readonly" id="idFormaPago" name="idFormaPago" />
+                    @*<label class="p-2">ID Forma de Pago</label>*@
+                    <input type="number" hidden value="@Model.Tables[0].Rows[0]["idFormaPago"].ToString()" required class="form-control mb-2 input-readonly" id="idFormaPago" name="idFormaPago" />
                 </div>
             </div>
 

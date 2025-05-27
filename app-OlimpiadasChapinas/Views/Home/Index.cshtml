@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Home Page";
+    ViewBag.BodyClass = "vista";
 }
 
 <div class="video">
@@ -37,27 +38,30 @@
     </div>
 </section>
 
-<section id="lineUp" class="lineUp">
-    <h2>Eventos disponibles</h2>
-    <p class="date">Inscríbete ya</p>
-    <div class="escenarios-contenedor contenedor">
-        <div class="escenario sport green-bg">
-            <p class="nombre-escenario">Fechas</p>
+@if (Session["usuario"] != null)
+{
+    <section id="lineUp" class="lineUp">
+        <h2>Eventos disponibles</h2>
+        <p class="date">Inscríbete ya</p>
+        <div class="escenarios-contenedor contenedor">
+            <div class="escenario sport green-bg">
+                <p class="nombre-escenario">Fechas</p>
 
-            <ul class="cal">
-                
-                @if (Model.Tables.Count > 0)
-                {
-                    if (Model.Tables[0].Rows.Count > 0)
+                <ul class="cal">
+
+                    @if (Model.Tables.Count > 0)
                     {
-                        for (int x = 0; x < Model.Tables[0].Rows.Count; x++)
+                        if (Model.Tables[0].Rows.Count > 0)
                         {
-                            <li onclick="location.href = '@Url.Action("newInscripcion", "Inscripcion")'">@Model.Tables[0].Rows[x]["fechaInicio"].ToString().Substring(0,10) | <span>@Model.Tables[0].Rows[x]["nombre"]</span></li>
+                            for (int x = 0; x < Model.Tables[0].Rows.Count; x++)
+                            {
+                                <li onclick="location.href = '@Url.Action("newInscripcion", "Inscripcion")'">@Model.Tables[0].Rows[x]["fechaInicio"].ToString().Substring(0, 10) | <span>@Model.Tables[0].Rows[x]["nombre"]</span></li>
+                            }
                         }
                     }
-                }
-            </ul>
+                </ul>
+            </div>
         </div>
-    </div>
-        <!--eventos-->        
-</section>
+        <!--eventos-->
+    </section>
+}

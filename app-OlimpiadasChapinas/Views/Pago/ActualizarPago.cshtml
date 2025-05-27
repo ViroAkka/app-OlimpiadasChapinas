@@ -12,7 +12,7 @@
     <script src="~/JS/jsPago.js"></script>
 }
 
-<h2 class="contenedor table-title">Actualización de Pagos</h2>
+<h2 class="table-title">Actualización de Pagos</h2>
 
 <form class="contenedor form-principal" action="/Pago/Actualizar" method="post">
     <div>
@@ -24,8 +24,8 @@
 
             <div class="col" align="center">
                 <div class="form-group">
-                    <label class="p-2">ID de Pago</label>
-                    <input type="text" readonly value="@Model.Data.Tables[0].Rows[0]["idPago"].ToString()" required class="form-control mb-2 input-readonly" id="idPago" name="idPago" />
+                    @*<label class="p-2">ID de Pago</label>*@
+                    <input type="text" hidden value="@Model.Data.Tables[0].Rows[0]["idPago"].ToString()" required class="form-control mb-2 input-readonly" id="idPago" name="idPago" />
                 </div>
             </div>
 

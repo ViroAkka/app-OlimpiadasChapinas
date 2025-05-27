@@ -10,7 +10,7 @@
     <script src="~/JS/modal.js"></script>
 }
 
-<h2 class="contenedor table-title">Mantenimiento de Pagos</h2>
+<h2 class="table-title">Mantenimiento de Pagos</h2>
 <form method="post" action="@Url.Action("Pago", "Pago")" class="contenedor">
     <div class="card border-primary tabla-principal">
         <div class="card-header d-flex justify-content-between">
@@ -51,8 +51,8 @@
                                 <td class="table-active">@Model.Tables[0].Rows[x]["idPago"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["idFormaPago"]</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["montoPago"]</td>
-                                <td class="table-active">@Model.Tables[0].Rows[x]["fecha"]</td>
-                                <td class="table-active">@Model.Tables[0].Rows[x]["hora"]</td>
+                                <td class="table-active">@Model.Tables[0].Rows[x]["fecha"].ToString().Substring(0, 10)</td>
+                                <td class="table-active">@Model.Tables[0].Rows[x]["hora"].ToString().Substring(0, 8)</td>
                                 <td class="table-active">@Model.Tables[0].Rows[x]["observaciones"]</td>
                                 <td><button type="button" class="btn btn-warning btn-button" onclick="location.href = '@Url.Action("ActualizarPago", "Pago", new { idPago = Model.Tables[0].Rows[x]["idPago"].ToString() })'; return false;">Actualizar</button></td>
                                 <td><button type="button" class="btn btn-danger btn-button" onclick="mostrarModalEliminar('@Url.Action("Eliminar", "Pago", new { idPago = Model.Tables[0].Rows[x]["idPago"].ToString() })');">Eliminar</button></td>

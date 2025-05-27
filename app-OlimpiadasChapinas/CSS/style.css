@@ -1,5 +1,11 @@
 ﻿/* Globales */
+.body-content {
+    
+}
+
+
 html, body {
+    overflow: visible !important;
     height: 100%;
     overflow-y: auto;
 }
@@ -7,6 +13,7 @@ html, body {
 html {
     font-size: 62.5%;
     box-sizing: border-box;
+    min-height: 100%;
 }
 
 *, *:before, *:after {
@@ -16,6 +23,9 @@ html {
 body {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.6rem;
+    min-height: 100%;
+    height: auto;
+    overflow-y: auto;
 }
 
 .contenedor {
@@ -209,6 +219,9 @@ img {
     background-image: url("../img/bg.png");
     background-repeat: repeat;
     background-size: contain;
+    background-attachment: fixed; /* si quieres que se quede fijo */
+    position: relative;
+    z-index: 1;
 }
 
 /* Este apartado es para la vista de las tablas */

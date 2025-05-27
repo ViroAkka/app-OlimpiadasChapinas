@@ -10,7 +10,7 @@
     <script src="~/JS/jsPais.js"></script>
 }
 
-<h2 class="contenedor table-title">Actualización de paises</h2>
+<h2 class="table-title">Actualización de paises</h2>
 
 <form class="contenedor form-principal" action="/Pais/Actualizar" method="post">
     <div>
@@ -22,8 +22,8 @@
 
             <div class="col" align="center">
                 <div class="form-group">
-                    <label class="p-2">ID del País (3 letras)</label>
-                    <input type="text" readonly value="@Model.Tables[0].Rows[0]["idPais"]" required class="form-control mb-2 input-readonly" id="idPais" name="idPais" />
+                    @*<label class="p-2">ID del País (3 letras)</label>*@
+                    <input type="text" hidden value="@Model.Tables[0].Rows[0]["idPais"]" required class="form-control mb-2 input-readonly" id="idPais" name="idPais" />
                 </div>
             </div>
 
