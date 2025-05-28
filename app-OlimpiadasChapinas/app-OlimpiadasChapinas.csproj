@@ -158,7 +158,7 @@
       <Content Include="img\**\*.*">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="Videos\**\*.*">
+      <Content Include="Video\**\*.*">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
   </ItemGroup>
