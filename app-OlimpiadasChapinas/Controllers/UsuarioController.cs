@@ -20,11 +20,6 @@ namespace app_OlimpiadasChapinas.Controllers
         // GET: Usuario
         public ActionResult Usuario(string idUsuario, string email)
         {
-            if (Session["usuario"] == null)
-            {
-                return RedirectToAction("loginUsuario", "Usuario");
-            }
-
             DataSet data = new DataSet();
             var url = "";
             if (string.IsNullOrEmpty(idUsuario) && string.IsNullOrEmpty(email))
@@ -244,9 +239,10 @@ namespace app_OlimpiadasChapinas.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                 }
-
-                ViewBag.Error = "Credenciales incorrectas.";
-                return RedirectToAction("loginUsuario", "Usuario"); ;
+               
+                TempData["ErrorMensaje"] = "Credenciales incorrectas.";
+                return RedirectToAction("loginUsuario", "Usuario");
+                
             }
         }
 

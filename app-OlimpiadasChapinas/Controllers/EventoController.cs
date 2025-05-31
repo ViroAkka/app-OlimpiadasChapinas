@@ -119,7 +119,11 @@ namespace app_OlimpiadasChapinas.Controllers
             client.Dispose();
 
             if (result.respuesta == 1) return RedirectToAction("Evento", "Evento");
-            else return RedirectToAction("newEvento", "Evento");
+            else 
+            {
+                TempData["ErrorMensaje"] = "No se pudo registrar el evento. Verifique los datos.";
+                return RedirectToAction("newEvento", "Evento"); 
+            }
         }
 
         public ActionResult ActualizarEvento(string idEvento)
@@ -188,6 +192,7 @@ namespace app_OlimpiadasChapinas.Controllers
                         return RedirectToAction("Evento", "Evento");
                 }
 
+                TempData["ErrorMensaje"] = "No se pudo actualizar el evento. Verifique los datos.";
                 return RedirectToAction("ActualizarEvento", "Evento");
             }
         }
@@ -218,6 +223,7 @@ namespace app_OlimpiadasChapinas.Controllers
             result = JsonConvert.DeserializeObject<responseEvento>(resultJson);
             client.Dispose();
 
+            TempData["ErrorMensaje"] = "No se pudo eliminar el evento. Verifique los datos.";
             return RedirectToAction("Evento", "Evento");
         }
 

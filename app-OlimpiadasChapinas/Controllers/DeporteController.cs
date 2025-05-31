@@ -91,7 +91,11 @@ namespace app_OlimpiadasChapinas.Controllers
             client.Dispose();
 
             if (result.respuesta == 1) return RedirectToAction("Deporte", "Deporte");
-            else return RedirectToAction("newDeporte", "Deporte");
+            else
+            {
+                TempData["ErrorMensaje"] = "No se pudo registrar el usuario. Verifique los datos.";
+                return RedirectToAction("newDeporte", "Deporte");
+            }
         }
 
         public ActionResult ActualizarDeporte(string idDeporte)

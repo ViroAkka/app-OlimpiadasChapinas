@@ -12,6 +12,14 @@
 
 @section scripts {
     <script src="~/JS/jsInscripcion.js"></script>
+    <script src="~/JS/modal.js"></script>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <script>
+            mostrarNotificacion("@TempData["ErrorMessage"]");
+        </script>
+    }
 }
 
 <h2 class="table-title">Actualización de Inscripciones</h2>
@@ -22,111 +30,111 @@
             <label class="p-2">Actualizar Inscripcion</label>
             <button onclick="location.href = '@Url.Action("Inscripcion", "Inscripcion")'; return false;" class="btn btn-success">Regresar</button>
         </div>
-            <div class="col">
-                
+        <div class="col">
+
+        </div>
+
+        <div class="col mt-10">
+            <div class="col" align="center">
+                <div class="form-group">
+                    @*<label class="p-2">ID del Evento</label>*@
+                    <input type="text" hidden value="@Model.Data.Tables[0].Rows[0]["idEvento"]" required class="form-control mb-2 input-readonly" id="idEvento" name="idEvento" />
+                </div>
             </div>
 
-            <div class="col mt-10">
-                <div class="col" align="center">
-                    <div class="form-group">
-                        @*<label class="p-2">ID del Evento</label>*@
-                        <input type="text" hidden value="@Model.Data.Tables[0].Rows[0]["idEvento"]" required class="form-control mb-2 input-readonly" id="idEvento" name="idEvento" />
-                    </div>
+            <div class="col" align="center">
+                <div class="form-group">
+                    @*<label class="p-2">ID del Participante</label>*@
+                    <input type="text" hidden value="@Model.Data.Tables[0].Rows[0]["idParticipante"]" required class="form-control mb-2 input-readonly" id="idParticipante" name="idParticipante" />
                 </div>
+            </div>
 
-                <div class="col" align="center">
-                    <div class="form-group">
-                        @*<label class="p-2">ID del Participante</label>*@
-                        <input type="text" hidden value="@Model.Data.Tables[0].Rows[0]["idParticipante"]" required class="form-control mb-2 input-readonly" id="idParticipante" name="idParticipante" />
-                    </div>
+            <div class="col" align="center">
+                <div class="form-group">
+                    @*<label class="p-2">ID del Pago</label>*@
+                    <input type="text" hidden value="@Model.Data.Tables[0].Rows[0]["idPago"]" required class="form-control mb-2 input-readonly" id="idPago" name="idPago" />
                 </div>
+            </div>
 
-                <div class="col" align="center">
-                    <div class="form-group">
-                        @*<label class="p-2">ID del Pago</label>*@
-                        <input type="text" hidden value="@Model.Data.Tables[0].Rows[0]["idPago"]" required class="form-control mb-2 input-readonly" id="idPago" name="idPago" />
-                    </div>
-                </div>
-
-                <div class="col" align="center">
-                    <div class="form-group">
-                        <label class="p-2">ID del Evento</label>
-                        <select required class="form-control mb-2 lista-opciones" id="idEventoActualizado" name="idEventoActualizado">
-                            <option disabled>----Seleccionar una opción----</option>
-                            @if (Model.Evento.Tables.Count > 0)
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">ID del Evento</label>
+                    <select required class="form-control mb-2 lista-opciones" id="idEventoActualizado" name="idEventoActualizado">
+                        <option disabled>----Seleccionar una opción----</option>
+                        @if (Model.Evento.Tables.Count > 0)
+                        {
+                            if (Model.Evento.Tables[0].Rows.Count > 0)
                             {
-                                if (Model.Evento.Tables[0].Rows.Count > 0)
+                                for (int x = 0; x < Model.Evento.Tables[0].Rows.Count; x++)
                                 {
-                                    for (int x = 0; x < Model.Evento.Tables[0].Rows.Count; x++)
+                                    if (Model.Evento.Tables[0].Rows[x]["idEventoPadre"].ToString() == "")
                                     {
-                                        if (Model.Evento.Tables[0].Rows[x]["idEventoPadre"].ToString() == "")
+                                        <option @(evento == @Model.Evento.Tables[0].Rows[x]["idEvento"].ToString() ? "selected" : "")>@Model.Evento.Tables[0].Rows[x]["idEvento"].ToString() - @Model.Evento.Tables[0].Rows[x]["nombre"].ToString()</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">ID del Participante</label>
+                    <select required class="form-control mb-2 lista-opciones" id="idParticipanteActualizado" name="idParticipanteActualizado">
+                        <option disabled>----Seleccionar una opción----</option>
+                        @if (Model.Participante.Tables.Count > 0)
+                        {
+                            if (Model.Participante.Tables[0].Rows.Count > 0)
+                            {
+                                for (int x = 0; x < Model.Participante.Tables[0].Rows.Count; x++)
+                                {
+                                    <option @(participante == Model.Participante.Tables[0].Rows[x]["idParticipante"].ToString() ? "selected" : "")>
+                                        @Model.Participante.Tables[0].Rows[x]["idParticipante"].ToString() -
+                                        @for (int y = 0; y < Model.Usuario.Tables[0].Rows.Count; y++)
                                         {
-                                            <option @(evento == @Model.Evento.Tables[0].Rows[x]["idEvento"].ToString() ? "selected" : "")>@Model.Evento.Tables[0].Rows[x]["idEvento"].ToString() - @Model.Evento.Tables[0].Rows[x]["nombre"].ToString()</option>
-                                        }
-                                    }
-                                }
-                            }
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col" align="center">
-                    <div class="form-group">
-                        <label class="p-2">ID del Participante</label>
-                        <select required class="form-control mb-2 lista-opciones" id="idParticipanteActualizado" name="idParticipanteActualizado">
-                            <option disabled>----Seleccionar una opción----</option>
-                            @if (Model.Participante.Tables.Count > 0)
-                            {
-                                if (Model.Participante.Tables[0].Rows.Count > 0)
-                                {
-                                    for (int x = 0; x < Model.Participante.Tables[0].Rows.Count; x++)
-                                    {
-                                        <option @(participante == Model.Participante.Tables[0].Rows[x]["idParticipante"].ToString() ? "selected" : "")>
-                                            @Model.Participante.Tables[0].Rows[x]["idParticipante"].ToString() -
-                                            @for (int y = 0; y < Model.Usuario.Tables[0].Rows.Count; y++)
-                                            {
-                                                if (Model.Participante.Tables[0].Rows[x]["idUsuario"].ToString() == Model.Usuario.Tables[0].Rows[y]["idUsuario"].ToString())
-                                                {
-                                                    @(Model.Usuario.Tables[0].Rows[x]["nombre"].ToString() + " ") @(Model.Usuario.Tables[0].Rows[x]["apellido"].ToString())
-                                                }
+                                            if (Model.Participante.Tables[0].Rows[x]["idUsuario"].ToString() == Model.Usuario.Tables[0].Rows[y]["idUsuario"].ToString())
+                                           {
+                                                @(Model.Usuario.Tables[0].Rows[y]["nombre"].ToString() + " ") @(Model.Usuario.Tables[0].Rows[y]["apellido"].ToString())
                                             }
-                                        </option>
-                                    }
+                                        }
+                                    </option>
                                 }
                             }
-                        </select>
-                    </div>
+                        }
+                    </select>
                 </div>
+            </div>
 
-                <div class="col" align="center">
-                    <div class="form-group">
-                        <label class="p-2">ID del Pago</label>
-                        <select required class="form-control mb-2 lista-opciones" id="idPagoActualizado" name="idPagoActualizado">
-                            <option disabled selected>----Seleccionar una opción----</option>
-                            @if (Model.Pago.Tables.Count > 0)
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">ID del Pago</label>
+                    <select required class="form-control mb-2 lista-opciones" id="idPagoActualizado" name="idPagoActualizado">
+                        <option disabled selected>----Seleccionar una opción----</option>
+                        @if (Model.Pago.Tables.Count > 0)
+                        {
+                            if (Model.Pago.Tables[0].Rows.Count > 0)
                             {
-                                if (Model.Pago.Tables[0].Rows.Count > 0)
+                                for (int x = 0; x < Model.Pago.Tables[0].Rows.Count; x++)
                                 {
-                                    for (int x = 0; x < Model.Pago.Tables[0].Rows.Count; x++)
-                                    {
-                                        <option @(pago == @Model.Pago.Tables[0].Rows[x]["idPago"].ToString() ? "selected" : "")>@Model.Pago.Tables[0].Rows[x]["idPago"].ToString() - @Model.Pago.Tables[0].Rows[x]["observaciones"].ToString()</option>
-                                    }
+                                    <option @(pago == @Model.Pago.Tables[0].Rows[x]["idPago"].ToString() ? "selected" : "")>@Model.Pago.Tables[0].Rows[x]["idPago"].ToString() - @Model.Pago.Tables[0].Rows[x]["observaciones"].ToString()</option>
                                 }
                             }
-                        </select>
-                    </div>
+                        }
+                    </select>
                 </div>
+            </div>
 
-                <div class="col" align="center">
-                    <div class="form-group">
-                        <label class="p-2">Fuente de publicidad donde se enteró del evento</label>
-                        <input type="text" value="@Model.Data.Tables[0].Rows[0]["fuentePublicidad"].ToString()" required class="form-control mb-2" id="fuentePublicidad" name="fuentePublicidad" />
-                    </div>
+            <div class="col" align="center">
+                <div class="form-group">
+                    <label class="p-2">Fuente de publicidad donde se enteró del evento</label>
+                    <input type="text" value="@Model.Data.Tables[0].Rows[0]["fuentePublicidad"].ToString()" required class="form-control mb-2" id="fuentePublicidad" name="fuentePublicidad" />
                 </div>
             </div>
-            <div align="center">
-                <button type="submit" class="btn btn-primary btn-button" onclick="validarGuardadoDeCampos(event);">Guardar</button>
-            </div>
+        </div>
+        <div align="center">
+            <button type="submit" class="btn btn-primary btn-button" onclick="validarGuardadoDeCampos(event);">Guardar</button>
+        </div>
     </div>
 </form>
 

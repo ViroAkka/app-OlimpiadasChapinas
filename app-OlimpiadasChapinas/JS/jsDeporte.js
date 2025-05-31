@@ -7,7 +7,7 @@
         respuesta += "\n{nombre}";
     }
 
-    if ($("#categoria").val().trim() == "") {
+    if ($("#categoria").val() == null) {
         respuesta += "\n{categoria}";
     }
 

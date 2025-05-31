@@ -11,9 +11,17 @@
 
 @section scripts {
     <script src="~/JS/jsEvento.js"></script>
+    <script src="~/JS/modal.js"></script>
+
+    @if (TempData["ErrorMensaje"] != null)
+    {
+        <script>
+            mostrarNotificacion("@TempData["ErrorMensaje"]");
+        </script>
+    }
 }
 
-<h2 class="table-title" >Actualización de Eventos Eventos</h2>
+<h2 class="table-title">Actualización de Eventos Eventos</h2>
 
 <form class="contenedor form-principal" action="/Evento/Actualizar" method="post">
     <div>
@@ -103,7 +111,7 @@
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">Monto de Inscripción</label>
-                    <input type="number" value="@Model.Data.Tables[0].Rows[0]["montoInscripcion"].ToString()" required class="form-control mb-2" id="montoInscripcion" name="montoInscripcion" min="0" max="1000"/>
+                    <input type="number" value="@Model.Data.Tables[0].Rows[0]["montoInscripcion"].ToString()" required class="form-control mb-2" id="montoInscripcion" name="montoInscripcion" min="0" max="1000" />
                 </div>
             </div>
 

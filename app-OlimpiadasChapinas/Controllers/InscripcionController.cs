@@ -154,7 +154,10 @@ namespace app_OlimpiadasChapinas.Controllers
             client.Dispose();
 
             if (result.respuesta == 1) return RedirectToAction("Inscripcion", "Inscripcion");
-            else return RedirectToAction("newInscripcion", "Inscripcion");
+            
+            TempData["ErrorMessage"] = $"No se pudo registrar la inscripcion. Verifique los datos.";
+            return RedirectToAction("newInscripcion", "Inscripcion"); 
+            
         }
 
         public ActionResult ActualizarInscripcion(int idEvento, int idParticipante, int idPago)
@@ -228,8 +231,11 @@ namespace app_OlimpiadasChapinas.Controllers
                     resultJson = await response.Content.ReadAsStringAsync();
                     responseInscripcion result = JsonConvert.DeserializeObject<responseInscripcion>(resultJson);
                     if (result.respuesta == 1)
+                    {
                         return RedirectToAction("Inscripcion", "Inscripcion");
-                } 
+                    }
+                }
+
                 return RedirectToAction("ActualizarInscripcion", "Inscripcion");
             }
         }
@@ -264,6 +270,7 @@ namespace app_OlimpiadasChapinas.Controllers
             result = JsonConvert.DeserializeObject<responseInscripcion>(resultJson);
             client.Dispose();
 
+            TempData["ErrorMessage"] = "No se pudo registrar la inscripción. Verifique los datos.";
             return RedirectToAction("Inscripcion", "Inscripcion");
         }
 

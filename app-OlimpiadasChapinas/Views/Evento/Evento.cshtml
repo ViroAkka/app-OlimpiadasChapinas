@@ -9,6 +9,13 @@
 @section scripts {
     <script src="~/JS/jsEvento.js"></script>
     <script src="~/JS/modal.js"></script>
+
+    @if (TempData["ErrorMensaje"] != null)
+    {
+        <script>
+            mostrarNotificacion("@TempData["ErrorMensaje"]");
+        </script>
+    }
 }
 
 <h2 class="table-title">Mantenimiento de Eventos</h2>

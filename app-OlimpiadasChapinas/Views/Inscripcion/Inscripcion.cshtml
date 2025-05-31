@@ -9,6 +9,13 @@
 @section scripts {
     <script src="~/JS/jsInscripcion.js"></script>
     <script src="~/JS/modal.js"></script>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <script>
+            mostrarNotificacion("@TempData["ErrorMessage"]");
+        </script>
+    }
 }
 
 <h2 class="table-title">Mantenimiento de Inscripciones</h2>

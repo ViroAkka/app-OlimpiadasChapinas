@@ -8,6 +8,14 @@
 
 @section scripts {
     <script src="~/JS/jsEvento.js"></script>
+    <script src="~/JS/modal.js"></script>
+
+    @if (TempData["ErrorMensaje"] != null)
+    {
+        <script>
+            mostrarNotificacion("@TempData["ErrorMensaje"]");
+        </script>
+    }
 }
 
 <h2 class="table-title">Registro de Nuevos Eventos</h2>
@@ -42,7 +50,8 @@
                                 }
                             }
                         }
-                    <</select>
+                        <
+                    </select>
                 </div>
             </div>
 
@@ -58,7 +67,7 @@
                             {
                                 for (int x = 0; x < Model.Evento.Tables[0].Rows.Count; x++)
                                 {
-                                    if (Model.Evento.Tables[0].Rows[x]["idEventoPadre"].ToString() == "" )
+                                    if (Model.Evento.Tables[0].Rows[x]["idEventoPadre"].ToString() == "")
                                     {
                                         <option>@Model.Evento.Tables[0].Rows[x]["idEvento"].ToString() - @Model.Evento.Tables[0].Rows[x]["nombre"].ToString()</option>
                                     }
@@ -86,14 +95,14 @@
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">Cantidad de participantes</label>
-                    <input type="number" required class="form-control mb-2" id="cantidadParticipantes" name="cantidadParticipantes" min="2" max="32"/>
+                    <input type="number" required class="form-control mb-2" id="cantidadParticipantes" name="cantidadParticipantes" min="2" max="32" />
                 </div>
             </div>
 
             <div class="col" align="center">
                 <div class="form-group">
                     <label class="p-2">Monto de Inscripción</label>
-                    <input type="number" required class="form-control mb-2" id="montoInscripcion" name="montoInscripcion"  min="0" max="1000"/>
+                    <input type="number" required class="form-control mb-2" id="montoInscripcion" name="montoInscripcion" min="0" max="1000" />
                 </div>
             </div>
 

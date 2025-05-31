@@ -7,6 +7,14 @@
 
 @section scripts {
     <script src="~/JS/jsUsuario.js"></script>
+    <script src="~/JS/modal.js"></script>
+
+    @if (TempData["ErrorMensaje"] != null)
+    {
+        <script>
+            mostrarNotificacion("@TempData["ErrorMensaje"]");
+        </script>
+    }
 }
 
 <h2 class="table-title">Inicio de sesión</h2>
@@ -19,7 +27,7 @@
             </div>
 
             <div class="col" align="center">
-               <div class="form-group">
+                <div class="form-group">
                     <label class="p-2">Email</label>
                     <input type="email" required class="form-control mb-2" id="email" name="email" />
                 </div>

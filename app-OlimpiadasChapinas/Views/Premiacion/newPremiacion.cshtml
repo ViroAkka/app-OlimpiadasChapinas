@@ -74,7 +74,7 @@
                                     {
                                         if (Model.Participante.Tables[0].Rows[x]["idUsuario"].ToString() == Model.Usuario.Tables[0].Rows[y]["idUsuario"].ToString())
                                         {
-                                            @(Model.Usuario.Tables[0].Rows[x]["nombre"].ToString() + " ") @(Model.Usuario.Tables[0].Rows[x]["apellido"].ToString())
+                                            @(Model.Usuario.Tables[0].Rows[y]["nombre"].ToString() + " ") @(Model.Usuario.Tables[0].Rows[y]["apellido"].ToString())
                                         }
                                     }
                                     </option>
